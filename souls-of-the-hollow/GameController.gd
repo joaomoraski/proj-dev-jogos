@@ -4,6 +4,10 @@ extends Node
 var _player: Player
 var _camera: Camera2D
 
+# GLOBAL VARIABLES
+############################################
+var player_life = 1000
+
 # PRIVATE METHODS
 ############################################
 
@@ -13,6 +17,8 @@ func init(player, camera) -> void:
 	_player = player
 	_camera = camera
 	get_tree().call_group("enemies", "set_player", _player)
+	get_tree().call_group("breakables", "set_player", _player)
+	get_tree().call_group("timerDash", "set_player", _player)
 
 func get_camera() -> Camera2D:
 	return _camera

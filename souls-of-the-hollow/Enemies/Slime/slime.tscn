@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c3q5e4dakljds"]
+[gd_scene load_steps=10 format=3 uid="uid://bl2fdhp0vbrhc"]
 
 [ext_resource type="Script" path="res://Enemies/Slime/slime.gd" id="1_dgs50"]
 [ext_resource type="Texture2D" uid="uid://bbbt8w1j0gv77" path="res://Enemies/Slime/DemonSlime.png" id="1_ecg2e"]
@@ -101,7 +101,7 @@ _data = {
 size = Vector2(15, 11)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l4t6d"]
-radius = 48.0104
+radius = 32.0156
 
 [node name="Slime" type="CharacterBody2D" groups=["enemies"]]
 script = ExtResource("1_dgs50")
@@ -132,7 +132,7 @@ debug_color = Color(0.956863, 0, 0.533333, 0.419608)
 
 [node name="VisionBox" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionBox" groups=["enemies"]]
 shape = SubResource("CircleShape2D_l4t6d")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

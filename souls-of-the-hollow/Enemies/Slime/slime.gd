@@ -41,6 +41,7 @@ func Move():
 func _on_hitbox_area_entered(area):
 	if area.name == "AttackCollision":
 		health -= _player.damage
+		velocity.y = -200
 
 func _on_vision_box_body_entered(body):
 	if body.name == "Player":

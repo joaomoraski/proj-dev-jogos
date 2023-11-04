@@ -81,7 +81,7 @@ _data = {
 "RESET": SubResource("Animation_4q0jx")
 }
 
-[node name="Chest" type="StaticBody2D" groups=["enemies"]]
+[node name="Chest" type="StaticBody2D" groups=["breakables"]]
 light_mask = 17
 visibility_layer = 8
 scale = Vector2(1.5, 1.5)

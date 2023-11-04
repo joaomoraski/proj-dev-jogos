@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://y0apbebnl2yq"]
+[gd_scene load_steps=35 format=3 uid="uid://y0apbebnl2yq"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_qiplr"]
 [ext_resource type="Texture2D" uid="uid://4xd8tl5lte7r" path="res://Player/PersonagemPrincipal.png" id="1_qslmg"]
+[ext_resource type="PackedScene" uid="uid://d20tc3g8jgae8" path="res://Player/dash.tscn" id="3_kd2kb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bvww3"]
 atlas = ExtResource("1_qslmg")
@@ -14,6 +15,18 @@ region = Rect2(0, 64, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_054hd"]
 atlas = ExtResource("1_qslmg")
 region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idxya"]
+atlas = ExtResource("1_qslmg")
+region = Rect2(96, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0oo4"]
+atlas = ExtResource("1_qslmg")
+region = Rect2(128, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oocra"]
+atlas = ExtResource("1_qslmg")
+region = Rect2(0, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hjvsx"]
 atlas = ExtResource("1_qslmg")
@@ -117,6 +130,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_idxya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0oo4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oocra")
+}],
+"loop": false,
+"name": &"Dash",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_hjvsx")
 }, {
 "duration": 1.0,
@@ -143,7 +170,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a8uwq")
 }],
-"loop": true,
+"loop": false,
 "name": &"Die",
 "speed": 4.0
 }, {
@@ -210,16 +237,21 @@ size = Vector2(14, 27)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iuhsv"]
 size = Vector2(12.75, 30)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0ynk"]
+size = Vector2(18, 27)
+
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 129
+collision_mask = 129
 floor_constant_speed = true
 script = ExtResource("1_qiplr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hxcyt")
-animation = &"Attack"
-frame = 2
+animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 10
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_kiqqe")
 
@@ -230,5 +262,17 @@ position = Vector2(16, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackCollision"]
 shape = SubResource("RectangleShape2D_iuhsv")
+disabled = true
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_x0ynk")
+disabled = true
+debug_color = Color(1, 0, 0.52549, 0.419608)
+
+[node name="Dash" parent="." instance=ExtResource("3_kd2kb")]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

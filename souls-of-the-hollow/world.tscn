@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://LabelFPS.gd" id="4_k0015"]
 [ext_resource type="Script" path="res://ButtonFullscreen.gd" id="5_ir848"]
 [ext_resource type="Texture2D" uid="uid://ba3oowpbfc84f" path="res://Maps/Background/bg1.png" id="9_a4st2"]
-[ext_resource type="PackedScene" uid="uid://c3q5e4dakljds" path="res://Enemies/Slime/slime.tscn" id="10_iq0h4"]
+[ext_resource type="PackedScene" uid="uid://bl2fdhp0vbrhc" path="res://Enemies/Slime/slime.tscn" id="10_iq0h4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wd4vp"]
 texture = ExtResource("2_c6dxb")
@@ -487,7 +487,8 @@ texture = ExtResource("2_c6dxb")
 8:4/0/terrains_peering_bit/top_side = 0
 
 [sub_resource type="TileSet" id="TileSet_kkrsb"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 641
+physics_layer_0/collision_mask = 641
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.631373, 0, 0.45098, 1)
@@ -502,11 +503,7 @@ position = Vector2(576, 326)
 scale = Vector2(3, 3)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background"]
-texture = ExtResource("9_a4st2")
-
-[node name="Sprite2D2" type="Sprite2D" parent="Background"]
-position = Vector2(226, -68)
-scale = Vector2(0.181667, 0.181667)
+scale = Vector2(3, 3)
 texture = ExtResource("9_a4st2")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -561,80 +558,8 @@ position = Vector2(82, 146)
 
 [node name="enemies" type="Node2D" parent="."]
 
-[node name="Slime" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(111, 143)
-
-[node name="Slime2" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(172, 119)
-
-[node name="Slime3" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(169, 568)
-
-[node name="Slime4" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(31, 425)
-
-[node name="Slime5" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(118, 423)
-
-[node name="Slime6" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(239, 426)
-
-[node name="Slime7" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(242, 146)
-
-[node name="Slime8" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(118, 617)
-
-[node name="Slime9" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(223, 621)
-
-[node name="Slime10" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(684, 617)
-
-[node name="Slime11" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(567, 605)
-
-[node name="Slime12" parent="enemies" instance=ExtResource("10_iq0h4")]
-position = Vector2(326, 220)
-
-[node name="enemies2" type="Node2D" parent="."]
-position = Vector2(367, -54)
-
-[node name="Slime" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(111, 284)
-
-[node name="Slime2" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(367, 385)
-
-[node name="Slime3" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(169, 568)
-
-[node name="Slime4" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(94, 417)
-
-[node name="Slime5" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(191, 447)
-
-[node name="Slime6" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(270, 488)
-
-[node name="Slime7" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(437, 305)
-
-[node name="Slime8" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(118, 617)
-
-[node name="Slime9" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(223, 621)
-
-[node name="Slime10" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(684, 617)
-
-[node name="Slime11" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(567, 605)
-
-[node name="Slime12" parent="enemies2" instance=ExtResource("10_iq0h4")]
-position = Vector2(230, 311)
+[node name="Slime" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(109, 142)
 
 [connection signal="pressed" from="CanvasLayer/ButtonFullscreen" to="CanvasLayer/ButtonFullscreen" method="_on_pressed"]
 
