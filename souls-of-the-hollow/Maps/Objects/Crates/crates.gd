@@ -11,8 +11,7 @@ func set_player(player: Player):
 func _on_hitbox_area_entered(area):
 	if area.name == "AttackCollision":
 		$anim.play("Hurt")
-		health -= _player.damage
-		print(health)
+		health -= game_controller.player_damage
 		await $anim.animation_finished
 		$anim.play("Active")
 	

@@ -1,19 +1,23 @@
-[gd_scene load_steps=14 format=3 uid="uid://srqjfdokl4wc"]
+[gd_scene load_steps=18 format=3 uid="uid://srqjfdokl4wc"]
 
 [ext_resource type="PackedScene" uid="uid://y0apbebnl2yq" path="res://Player/player.tscn" id="1_lsfwl"]
 [ext_resource type="Script" path="res://game_init.gd" id="1_o6rfp"]
-[ext_resource type="Texture2D" uid="uid://c8om0c18mbcye" path="res://Maps/Primera Fase Tileset.png" id="2_c6dxb"]
 [ext_resource type="PackedScene" uid="uid://dxfmjk3a1rfvo" path="res://UI/MobileInput/Joystick.tscn" id="2_fjshj"]
 [ext_resource type="PackedScene" uid="uid://d00gvi7bt2pgc" path="res://UI/MobileInput/ButtonAttack/button_attack.tscn" id="2_ggta7"]
+[ext_resource type="Texture2D" uid="uid://ba3oowpbfc84f" path="res://Maps/Background/FirstMap/bg1.png" id="2_vm23f"]
 [ext_resource type="PackedScene" uid="uid://bdutc403hjyxc" path="res://Maps/Objects/Crates/crates.tscn" id="3_bpwmo"]
 [ext_resource type="PackedScene" uid="uid://cb1gwekpgb0gg" path="res://UI/MobileInput/ButtonJump/button_jump.tscn" id="3_xfuj0"]
 [ext_resource type="Script" path="res://LabelFPS.gd" id="4_k0015"]
 [ext_resource type="Script" path="res://ButtonFullscreen.gd" id="5_ir848"]
-[ext_resource type="Texture2D" uid="uid://ba3oowpbfc84f" path="res://Maps/Background/bg1.png" id="9_a4st2"]
+[ext_resource type="Script" path="res://Player/LabelVida.gd" id="6_ev23u"]
+[ext_resource type="Texture2D" uid="uid://c8om0c18mbcye" path="res://Maps/FirstMap/Primera Fase Tileset.png" id="9_8rwcw"]
+[ext_resource type="Script" path="res://Player/Camera2D.gd" id="10_hdpr3"]
 [ext_resource type="PackedScene" uid="uid://bl2fdhp0vbrhc" path="res://Enemies/Slime/slime.tscn" id="10_iq0h4"]
+[ext_resource type="PackedScene" uid="uid://duhbwb3wyy5qm" path="res://Maps/exit_door.tscn" id="12_qpgwk"]
+[ext_resource type="PackedScene" uid="uid://bwdkf3dk1c25m" path="res://UI/floating_numbers.tscn" id="14_2784r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wd4vp"]
-texture = ExtResource("2_c6dxb")
+texture = ExtResource("9_8rwcw")
 0:0/0 = 0
 0:0/0/terrain_set = 0
 0:0/0/terrain = 0
@@ -504,7 +508,7 @@ scale = Vector2(3, 3)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background"]
 scale = Vector2(3, 3)
-texture = ExtResource("9_a4st2")
+texture = ExtResource("2_vm23f")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -523,6 +527,14 @@ vanchor = 1
 [node name="ButtonJump" parent="CanvasLayer/MobileInputs/Buttons" instance=ExtResource("3_xfuj0")]
 position = Vector2(66, 130)
 
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 183.0
+offset_top = 4.0
+offset_right = 253.0
+offset_bottom = 30.0
+text = "Vida: 100 | Times: 0"
+script = ExtResource("6_ev23u")
+
 [node name="LabelFPS" type="Label" parent="CanvasLayer"]
 offset_left = 124.0
 offset_top = 4.0
@@ -537,13 +549,15 @@ offset_bottom = 31.0
 text = "Fullscreen [F4]"
 script = ExtResource("5_ir848")
 
-[node name="Player" parent="." instance=ExtResource("1_lsfwl")]
-position = Vector2(16, 143)
+[node name="Player" parent="." groups=["damageIndicator"] instance=ExtResource("1_lsfwl")]
+z_index = 10
+position = Vector2(18, 144)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 z_index = 20
 position = Vector2(0, 3)
 zoom = Vector2(3, 3)
+script = ExtResource("10_hdpr3")
 
 [node name="FirstMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_kkrsb")
@@ -553,13 +567,111 @@ layer_0/tile_data = PackedInt32Array(655360, 65536, 0, 655361, 65536, 0, 655362,
 [node name="Crate2" parent="." instance=ExtResource("3_bpwmo")]
 position = Vector2(172, 148)
 
-[node name="Crate" parent="." instance=ExtResource("3_bpwmo")]
+[node name="Crate" parent="." groups=["damageIndicator"] instance=ExtResource("3_bpwmo")]
 position = Vector2(82, 146)
 
-[node name="enemies" type="Node2D" parent="."]
-
 [node name="Slime" parent="." instance=ExtResource("10_iq0h4")]
-position = Vector2(109, 142)
+position = Vector2(110, 142)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime2" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(20, 424)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime3" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(64, 418)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime4" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(118, 419)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime5" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(182, 419)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime6" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(236, 420)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime7" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(193, 559)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime8" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(106, 478)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime9" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(50, 502)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime10" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(39, 569)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime11" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(100, 571)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime12" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(134, 604)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime13" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(279, 612)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime14" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(473, 570)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime15" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(588, 506)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime16" parent="." instance=ExtResource("10_iq0h4")]
+position = Vector2(455, 456)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime17" parent="." instance=ExtResource("10_iq0h4")]
+visible = false
+position = Vector2(528, 383)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime18" parent="." instance=ExtResource("10_iq0h4")]
+visible = false
+position = Vector2(634, 461)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime19" parent="." instance=ExtResource("10_iq0h4")]
+visible = false
+position = Vector2(715, 570)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime20" parent="." instance=ExtResource("10_iq0h4")]
+visible = false
+position = Vector2(884, 518)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime21" parent="." instance=ExtResource("10_iq0h4")]
+visible = false
+position = Vector2(932, 566)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime22" parent="." instance=ExtResource("10_iq0h4")]
+visible = false
+position = Vector2(1010, 516)
+damage_node = ExtResource("14_2784r")
+
+[node name="Slime23" parent="." instance=ExtResource("10_iq0h4")]
+visible = false
+position = Vector2(1010, 516)
+damage_node = ExtResource("14_2784r")
+
+[node name="enemies" type="Node2D" parent="." groups=["damageIndicator"]]
+
+[node name="ExitDoor" parent="." instance=ExtResource("12_qpgwk")]
 
 [connection signal="pressed" from="CanvasLayer/ButtonFullscreen" to="CanvasLayer/ButtonFullscreen" method="_on_pressed"]
 

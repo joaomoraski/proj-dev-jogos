@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw7f2bl2iwv31"
-path="res://.godot/imported/bg3.png-653f0ae3cb190d86a83e1d53bafc51cd.ctex"
+uid="uid://c8om0c18mbcye"
+path="res://.godot/imported/Primera Fase Tileset.png-d7383ec4adf83eea68652aa7bbb19f2f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Maps/Background/bg3.png"
-dest_files=["res://.godot/imported/bg3.png-653f0ae3cb190d86a83e1d53bafc51cd.ctex"]
+source_file="res://Maps/FirstMap/Primera Fase Tileset.png"
+dest_files=["res://.godot/imported/Primera Fase Tileset.png-d7383ec4adf83eea68652aa7bbb19f2f.ctex"]
 
 [params]
 

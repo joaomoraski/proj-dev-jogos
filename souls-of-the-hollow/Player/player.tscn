@@ -1,7 +1,8 @@
-[gd_scene load_steps=35 format=3 uid="uid://y0apbebnl2yq"]
+[gd_scene load_steps=36 format=3 uid="uid://y0apbebnl2yq"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_qiplr"]
 [ext_resource type="Texture2D" uid="uid://4xd8tl5lte7r" path="res://Player/PersonagemPrincipal.png" id="1_qslmg"]
+[ext_resource type="PackedScene" uid="uid://bwdkf3dk1c25m" path="res://UI/floating_numbers.tscn" id="2_uhget"]
 [ext_resource type="PackedScene" uid="uid://d20tc3g8jgae8" path="res://Player/dash.tscn" id="3_kd2kb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bvww3"]
@@ -245,6 +246,7 @@ collision_layer = 129
 collision_mask = 129
 floor_constant_speed = true
 script = ExtResource("1_qiplr")
+damage_node = ExtResource("2_uhget")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hxcyt")
@@ -269,7 +271,6 @@ disabled = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_x0ynk")
-disabled = true
 debug_color = Color(1, 0, 0.52549, 0.419608)
 
 [node name="Dash" parent="." instance=ExtResource("3_kd2kb")]

@@ -5,6 +5,8 @@ extends CharacterBody2D
 enum PlayerStates {MOVE, ATTACK, DEAD} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
 var CurrentState = PlayerStates.MOVE # Estado atual do personagem
 
+@export var damage_node: PackedScene
+
 var normalSpeed = 150.0
 @export var SPEED = 150.0
 const JUMP_VELOCITY = -400.0
@@ -13,8 +15,8 @@ var _double_jump: bool = false
 var isAttacking: bool = false
 var invertAttackCollision: int = -32
 
-var health = game_controller.player_life
-var damage: float = 1
+const BASE_HEALTH = 100
+const BASE_DAMAGE = 25
 
 const dashspeed = 300.0
 const dashlength = 0.4
@@ -23,8 +25,23 @@ const dashlength = 0.4
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+func setup():
+	game_controller.setup_player(BASE_HEALTH, BASE_DAMAGE)
+
 func _ready():
 	$AttackCollision/CollisionShape2D.disabled = true
+	randomize()
+
+func popup(message: String):
+	var damage = damage_node.instantiate()
+	damage.get_child(0).text = message
+	damage.position = global_position
+	var tween = get_tree().create_tween()
+	tween.tween_property(damage, "position", global_position + _get_direction(), 0.75)
+	get_tree().current_scene.add_child(damage)
+
+func _get_direction():
+	return Vector2(randf_range(-1, 1), -randf()) * 16
 	
 func dash_collision_logic(logic: bool):
 	self.set_collision_layer_value(1, logic)
@@ -39,12 +56,20 @@ func _physics_process(delta):
 		dash_collision_logic(false)
 		dash.start_dash(dashlength)
 		
-		
 	SPEED = dashspeed if dash.is_dashing() else normalSpeed
 	
 	if Input.is_action_just_pressed("die"):
 		game_controller.player_life = 0
-	
+		
+	if Input.is_action_just_pressed("ui_end"):
+		position = Vector2(1163, 113) 
+		
+	if Input.is_action_just_pressed("hard"):
+		game_controller.times_finished += 1
+		
+	if Input.is_action_just_pressed("easy"):
+		game_controller.times_finished -= 1
+		
 	if game_controller.player_life <= 0:
 		Die()
 		return
@@ -108,7 +133,7 @@ func Die():
 	$AnimatedSprite2D.play("Die")
 	await $AnimatedSprite2D.animation_finished
 	get_tree().reload_current_scene()
-	game_controller.player_life = 1000
+	game_controller.setup_player(BASE_HEALTH, BASE_DAMAGE)
 
 func _on_animated_sprite_2d_animation_finished():
 	if $AnimatedSprite2D.animation == "Attack":
@@ -117,5 +142,6 @@ func _on_animated_sprite_2d_animation_finished():
 
 func _on_hitbox_body_entered(body):
 	if body.is_in_group("enemies"):
-		game_controller.player_life -= 1
-		print("deu ruim", game_controller.player_life)
+		game_controller.player_life -= game_controller.enemies_damage["Slime"]
+		game_controller.get_camera().shake_camera(3, 0.3)
+		popup(str(game_controller.enemies_damage["Slime"]))

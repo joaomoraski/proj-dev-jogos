@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8om0c18mbcye"
-path="res://.godot/imported/Primera Fase Tileset.png-dd376e7fabedbb51ec24191080aed4c6.ctex"
+uid="uid://dde5ktbt01v50"
+path="res://.godot/imported/New Piskel.png-0ecd58e887792fa7dcf314fea1226a49.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Maps/Primera Fase Tileset.png"
-dest_files=["res://.godot/imported/Primera Fase Tileset.png-dd376e7fabedbb51ec24191080aed4c6.ctex"]
+source_file="res://Maps/Objects/Door/New Piskel.png"
+dest_files=["res://.godot/imported/New Piskel.png-0ecd58e887792fa7dcf314fea1226a49.ctex"]
 
 [params]
 
