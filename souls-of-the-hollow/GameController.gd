@@ -31,10 +31,6 @@ func setup_player(life, damage):
 	player_life = life
 	player_damage = damage
 	
-#	var multiplier = 0.05 * times
-#		health += BASE_HEALTH * multiplier
-#		damage += BASE_DAMAGE * multiplier
-	
 	if times_finished:
 		player_life += (100 * (0.02 * game_controller.times_finished))
 		player_damage += (25 * (0.02 * game_controller.times_finished))

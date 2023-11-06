@@ -16,6 +16,6 @@ func _input(event):
 			
 func next_level():
 	game_controller.times_finished += 1
-	game_controller.setup_player(100, 25)
+	game_controller.setup_player(game_controller.player_life, 25)
 	get_tree().reload_current_scene()
 	pass
