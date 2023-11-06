@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 # Finite state machine
-enum PlayerStates {MOVE, ATTACK, DEAD} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
+enum PlayerStates {MOVE, ATTACK, DEAD, DASH} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
 var CurrentState = PlayerStates.MOVE # Estado atual do personagem
 
 @export var damage_node: PackedScene
@@ -54,6 +54,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("dash"):
 		dash_collision_logic(false)
+		CurrentState = PlayerStates.DASH
 		dash.start_dash(dashlength)
 		
 	SPEED = dashspeed if dash.is_dashing() else normalSpeed
@@ -81,29 +82,28 @@ func _physics_process(delta):
 # Esquerda -1
 # cima -1
 func animatePlayer():
-	if not isAttacking:
-		if is_on_floor():
-			if velocity.x == 0.0:
-				$AnimatedSprite2D.play("Idle")
-			elif not dash.is_dashing():
-				$AnimatedSprite2D.play("Walk")
+	if CurrentState == PlayerStates.MOVE:
+		if not isAttacking:
+			if is_on_floor():
+				if velocity.x == 0.0:
+					$AnimatedSprite2D.play("Idle")
+				elif not dash.is_dashing():
+					$AnimatedSprite2D.play("Walk")
+			else:
+				if velocity.y < 0 or _double_jump and not dash.is_dashing():
+					$AnimatedSprite2D.play("Jump")
+				if velocity.y > 10 and not dash.is_dashing():
+					$AnimatedSprite2D.play("Fall")
 		else:
-			if velocity.y < 0 or _double_jump and not dash.is_dashing():
-				$AnimatedSprite2D.play("Jump")
-			if velocity.y > 10 and not dash.is_dashing():
-				$AnimatedSprite2D.play("Fall")
-	else:
-		$AnimatedSprite2D.play("Attack")
-		
-	
-	if dash.is_dashing():
+			$AnimatedSprite2D.play("Attack")
+	if CurrentState == PlayerStates.DASH and dash.is_dashing():
 		$AnimatedSprite2D.play("Dash")
 	
 	$AnimatedSprite2D.flip_h = false if _direction > 0.0 else true
 	$AttackCollision/CollisionShape2D.position = Vector2(0,2) if _direction > 0 else Vector2(invertAttackCollision,2)
 	
 func CheckAndExecuteAttack():
-	if Input.is_action_just_pressed("Attack"):
+	if Input.is_action_just_pressed("Attack") and not CurrentState == PlayerStates.DASH:
 		$AttackCollision/CollisionShape2D.disabled = false
 		isAttacking = true
 
@@ -134,6 +134,9 @@ func Die():
 	await $AnimatedSprite2D.animation_finished
 	get_tree().reload_current_scene()
 	game_controller.setup_player(BASE_HEALTH, BASE_DAMAGE)
+
+func onStateFinish():
+	CurrentState = PlayerStates.MOVE
 
 func _on_animated_sprite_2d_animation_finished():
 	if $AnimatedSprite2D.animation == "Attack":

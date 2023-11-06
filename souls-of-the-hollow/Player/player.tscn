@@ -236,7 +236,7 @@ animations = [{
 size = Vector2(14, 27)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iuhsv"]
-size = Vector2(12.75, 30)
+size = Vector2(16, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x0ynk"]
 size = Vector2(18, 27)
@@ -260,7 +260,7 @@ shape = SubResource("RectangleShape2D_kiqqe")
 [node name="AttackCollision" type="Area2D" parent="."]
 light_mask = 8
 visibility_layer = 17
-position = Vector2(16, 2)
+position = Vector2(18, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackCollision"]
 shape = SubResource("RectangleShape2D_iuhsv")

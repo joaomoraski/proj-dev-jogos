@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cur4s8vbas1de"
+path="res://.godot/imported/Moonlight Sonata 1st Movement.mp3-9d1d0702ff7966085b3dc7a65d730369.mp3str"
+
+[deps]
+
+source_file="res://Sounds/Moonlight Sonata 1st Movement.mp3"
+dest_files=["res://.godot/imported/Moonlight Sonata 1st Movement.mp3-9d1d0702ff7966085b3dc7a65d730369.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

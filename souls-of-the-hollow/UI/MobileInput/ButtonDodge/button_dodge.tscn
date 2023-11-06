@@ -1,15 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://b2bap0ep06arb"]
 
-[ext_resource type="Script" path="res://UI/MobileInput/ButtonAttack/button_attack.gd" id="1_48acw"]
-[ext_resource type="Texture2D" uid="uid://bjglsy3ewuln" path="res://UI/MobileInput/Textures/button_a_normal.png" id="2_8khrc"]
-[ext_resource type="Texture2D" uid="uid://mj0i3tgqt062" path="res://UI/MobileInput/Textures/button_a_pressed.png" id="3_m1y63"]
+[ext_resource type="Script" path="res://UI/MobileInput/ButtonDodge/button_dodge.gd" id="1_6ecie"]
+[ext_resource type="Texture2D" uid="uid://41bd74u7eyr" path="res://UI/MobileInput/ButtonDodge/DashButton-Normal.png" id="2_prbn8"]
+[ext_resource type="Texture2D" uid="uid://dknvlngpqtv4n" path="res://UI/MobileInput/ButtonDodge/DashButton-Pressed.png" id="3_rkxtu"]
 
-[node name="ButtonAttack" type="Node2D"]
-script = ExtResource("1_48acw")
+[node name="ButtonDodge" type="Node2D"]
+script = ExtResource("1_6ecie")
+button_action = null
 
-[node name="ButtonAttack" type="TouchScreenButton" parent="."]
-texture_normal = ExtResource("2_8khrc")
-texture_pressed = ExtResource("3_m1y63")
+[node name="ButtonDodge" type="TouchScreenButton" parent="."]
+texture_normal = ExtResource("2_prbn8")
+texture_pressed = ExtResource("3_rkxtu")
 
-[connection signal="pressed" from="ButtonAttack" to="." method="_on_TouchScreenButton_pressed"]
-[connection signal="released" from="ButtonAttack" to="." method="_on_TouchScreenButton_released"]
+[connection signal="pressed" from="ButtonDodge" to="." method="_on_TouchScreenButton_pressed"]
+[connection signal="released" from="ButtonDodge" to="." method="_on_TouchScreenButton_released"]

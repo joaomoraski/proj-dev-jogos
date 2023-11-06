@@ -16,4 +16,5 @@ func is_dashing():
 	return !timer.is_stopped()
 
 func _on_dash_timer_timeout():
+	_player.onStateFinish()
 	_player.dash_collision_logic(true)

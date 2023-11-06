@@ -73,7 +73,7 @@ func _calculate_move_vector(event_position) -> Vector2:
 
 	
 func _get_stick_movement(event: InputEvent) -> void:
-#	if _base.is_pressed():				
+#	if _base.is_pressed():
 	_input_vector = _calculate_move_vector(event.position)
 	_active = true
 	_point.global_position = event.position
@@ -103,8 +103,9 @@ func _input(event: InputEvent) -> void:
 		if not event.pressed:
 			_active = false
 			_input_vector = Vector2.ZERO
-			_point.visible = false
-			_touch_id = -1	
+#			_point.visible = false
+			_point.position = Vector2(64,64)
+			_touch_id = -1
 			_generate_input_events()
 
 
