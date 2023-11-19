@@ -15,8 +15,9 @@ var _double_jump: bool = false
 var isAttacking: bool = false
 var invertAttackCollision: int = -32
 
-const BASE_HEALTH = 100
-const BASE_DAMAGE = 25
+var health = 100
+var damage = 1
+var max_health = 100
 
 const dashspeed = 300.0
 const dashlength = 0.4
@@ -24,13 +25,29 @@ const dashlength = 0.4
 @onready var dash = $Dash
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
-func setup():
-	game_controller.setup_player(BASE_HEALTH, BASE_DAMAGE)
+var _player_health_bar: ProgressBar
 
 func _ready():
 	$AttackCollision/CollisionShape2D.disabled = true
 	randomize()
+	setup()
+	
+func setup():
+	var times = game_controller.times_finished
+	if times:
+		var multiplier = 0.02 * times
+		if game_controller.no_reset_life:
+			health = game_controller.player_health
+			game_controller.no_reset_life = false
+		health += (100 * multiplier)
+		damage += 25 * multiplier
+		max_health += 100 * multiplier
+	game_controller.player_damage = damage
+	game_controller.player_health = health
+	game_controller.player_max_health = max_health
+
+func set_player_health_bar(player_health_bar: ProgressBar):
+	_player_health_bar = player_health_bar
 
 func popup(message: String):
 	var damage = damage_node.instantiate()
@@ -46,9 +63,14 @@ func _get_direction():
 func dash_collision_logic(logic: bool):
 	self.set_collision_layer_value(1, logic)
 	self.set_collision_mask_value(1, logic)
-	$Hitbox/CollisionShape2D.disabled = !logic
+	$PlayerHitBox/CollisionShape2D.disabled = !logic
+	
+func set_health_label():
+	var vidaAtual: float = float(health)/float(max_health) * 100
+	_player_health_bar.value = vidaAtual
 	
 func _physics_process(delta):
+	set_health_label()
 	# Adiciona a gravidade ao jogo
 	velocity.y += gravity * delta
 	
@@ -60,7 +82,8 @@ func _physics_process(delta):
 	SPEED = dashspeed if dash.is_dashing() else normalSpeed
 	
 	if Input.is_action_just_pressed("die"):
-		game_controller.player_life = 0
+		health = 0
+		game_controller.player_health = 0
 		
 	if Input.is_action_just_pressed("ui_end"):
 		position = Vector2(1163, 113) 
@@ -71,7 +94,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("easy"):
 		game_controller.times_finished -= 1
 		
-	if game_controller.player_life <= 0:
+	if health <= 0:
 		Die()
 		return
 		
@@ -131,9 +154,9 @@ func Move():
 
 func Die():
 	$AnimatedSprite2D.play("Die")
+	$PlayerHitBox/CollisionShape2D.disabled = true
 	await $AnimatedSprite2D.animation_finished
 	get_tree().reload_current_scene()
-	game_controller.setup_player(BASE_HEALTH, BASE_DAMAGE)
 
 func onStateFinish():
 	CurrentState = PlayerStates.MOVE
@@ -143,8 +166,16 @@ func _on_animated_sprite_2d_animation_finished():
 		$AttackCollision/CollisionShape2D.disabled = true
 		isAttacking = false
 
-func _on_hitbox_body_entered(body):
-	if body.is_in_group("enemies"):
-		game_controller.player_life -= game_controller.enemies_damage["Slime"]
+#func _on_hitbox_body_entered(body):
+#	if body.is_in_group("enemies"):
+#		game_controller.player_life -= game_controller.enemies_damage["Slime"]
+#		game_controller.get_camera().shake_camera(3, 0.3)
+#		popup(str(game_controller.enemies_damage["Slime"]))
+
+func _on_hitbox_area_entered(area):
+	if area.is_in_group("slimeAttack"):
+		health -= game_controller.enemies_damage["Slime"]
+		game_controller.player_health = health
 		game_controller.get_camera().shake_camera(3, 0.3)
+		
 		popup(str(game_controller.enemies_damage["Slime"]))

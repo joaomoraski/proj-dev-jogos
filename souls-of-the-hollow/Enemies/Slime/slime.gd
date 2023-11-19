@@ -2,13 +2,22 @@ class_name Slime
 extends CharacterBody2D
 
 @export var damage_node: PackedScene
+# Finite state machine
+enum SlimeStates {MOVE, ATTACK, DEAD, HURT} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
+var CurrentState = SlimeStates.MOVE # Estado atual do personagem
 
-var speed = 30
+
+var speed = 32
 const BASE_HEALTH = 100
 const BASE_DAMAGE = 25
+var _is_moving_right: bool = true
+var _can_attack: bool = true
+var _can_move: bool = true
+var cooldown_time: float = 1.5  # Tempo de cooldown em segundos
+var cooldown_timer: float = 0.0  # Temporizador para controlar o cooldown
 
 var health = 100
-var damage = 25
+var damage = 10
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var _player: Player
@@ -24,6 +33,43 @@ func _ready():
 func set_player(player: Player):
 	_player = player
 
+func setup():
+	var times = game_controller.times_finished
+	if times:
+		var multiplier = 0.05 * times
+		health += BASE_HEALTH * multiplier
+		damage += BASE_DAMAGE * multiplier
+		game_controller.setup_enemy_damage("Slime", damage)
+
+func _physics_process(delta):
+	attack_logic(delta)
+	if _can_move and CurrentState == SlimeStates.HURT:
+		CurrentState = SlimeStates.MOVE
+		$Hitbox.monitoring = true
+	# Adiciona a gravidade ao jogo
+	velocity.y += gravity * delta
+	if CurrentState == SlimeStates.MOVE:
+		Move()
+	verify_death()
+	move_and_slide()
+	
+func verify_death():
+	if health <= 0:
+		velocity = Vector2(0,0)
+		CurrentState = SlimeStates.DEAD
+		$AnimationPlayer.play("Dead")
+		$CollisionShape2D.disabled = true
+		$Hitbox/CollisionShape2D.disabled = true
+		await $AnimationPlayer.animation_finished
+		queue_free()
+
+func attack_logic(delta):
+	# Atualizar o temporizador de cooldown
+	cooldown_timer = max(0, cooldown_timer - delta)
+	# Deixa o inimigo atacar
+	_can_attack = cooldown_timer <= 0;
+	_can_move = cooldown_timer <= 0;
+
 func popup(message: String):
 	var node = damage_node.instantiate()
 	node.get_child(0).text = message
@@ -34,44 +80,37 @@ func popup(message: String):
 
 func _get_direction():
 	return Vector2(randf_range(-1, 1), -randf()) * 16
-
-func setup():
-	var times = game_controller.times_finished
-	if times:
-		var multiplier = 0.05 * times
-		health += BASE_HEALTH * multiplier
-		damage += BASE_DAMAGE * multiplier
-		game_controller.setup_enemy_damage("Slime", damage)
-
-
-func _physics_process(delta):
-	# Adiciona a gravidade ao jogo
-	velocity.y += gravity * delta
-	Move()
 	
+	
+# Esquerda -1
+# direita 1
 func Move():
-	if player_is_on_area:
-		# Aumenta velocidade quando ele estiver mais longe
-		_motion = (position.direction_to(_player.position) * speed) * (position.distance_to(_player.position)*0.1)
-		velocity.x = _motion.x
+	if player_is_on_area and position.distance_to(_player.position) <= 15.0 and _can_attack:
+		$AnimationPlayer.play("Attack")
+		cooldown_timer = cooldown_time
+
+	if $AnimationPlayer.current_animation == "Attack":
+		return
+	velocity.x = speed if _is_moving_right else -speed
+	detect_turn_around()
 	
-	if health <= 0:
-		velocity.x = 0 
-		$AnimationPlayer.play("Dead")
-		$CollisionShape2D.disabled = true
-		$Hitbox/CollisionShape2D.disabled = true
-		await $AnimationPlayer.animation_finished
-		queue_free()
-		
-	move_and_slide()
+func invert_moving():
+	_is_moving_right = !_is_moving_right
+	scale.x = -scale.x
 #
 func _on_hitbox_area_entered(area):
-	if area.name == "AttackCollision":
+	if area.name == "AttackCollision" and CurrentState == SlimeStates.MOVE:
+		CurrentState = SlimeStates.HURT
+		$Hitbox.monitoring = false
+		cooldown_timer = cooldown_time
 		health -= game_controller.player_damage
-		velocity.y = -200
+		velocity = Vector2((speed*-1) * 2,-200)
+		print(velocity)
 		game_controller.get_camera().shake_camera(3, 0.3)
 		popup(str(game_controller.player_damage))
-
+	if area.name == "PresenceCollision":
+		invert_moving()
+		
 func _on_vision_box_body_entered(body):
 	if body.name == "Player":
 		player_is_on_area = true
@@ -80,3 +119,10 @@ func _on_vision_box_body_exited(body):
 	if body.name == "Player":
 		player_is_on_area = false
 		velocity.x = 0
+
+func detect_turn_around():
+	if not $RayCast2D.is_colliding() and is_on_floor():
+		invert_moving()
+		
+func on_attack_animation_finished():
+	$AnimationPlayer.play("Idle")

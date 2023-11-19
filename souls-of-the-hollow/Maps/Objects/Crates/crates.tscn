@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdutc403hjyxc"]
+[gd_scene load_steps=11 format=3 uid="uid://bdutc403hjyxc"]
 
 [ext_resource type="Script" path="res://Maps/Objects/Crates/crates.gd" id="1_dj4t3"]
 [ext_resource type="Texture2D" uid="uid://dx61l6qjjb6p1" path="res://Maps/Objects/Crates/Crates.png" id="1_tyiwo"]
@@ -81,10 +81,15 @@ _data = {
 "RESET": SubResource("Animation_4q0jx")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mc53g"]
+size = Vector2(17.3333, 17.3333)
+
 [node name="Chest" type="StaticBody2D" groups=["breakables"]]
 light_mask = 17
 visibility_layer = 8
 scale = Vector2(1.5, 1.5)
+collision_layer = 129
+collision_mask = 129
 script = ExtResource("1_dj4t3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -110,5 +115,11 @@ autoplay = "Active"
 libraries = {
 "": SubResource("AnimationLibrary_k5tpg")
 }
+
+[node name="PresenceCollision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PresenceCollision"]
+position = Vector2(4.76837e-07, 4.76837e-07)
+shape = SubResource("RectangleShape2D_mc53g")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

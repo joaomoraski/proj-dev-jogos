@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://fysa5u35ksds"]
+
+[ext_resource type="PackedScene" uid="uid://dxfmjk3a1rfvo" path="res://UI/MobileInput/Joystick.tscn" id="1_gfeuy"]
+[ext_resource type="PackedScene" uid="uid://d00gvi7bt2pgc" path="res://UI/MobileInput/ButtonAttack/button_attack.tscn" id="2_i27l5"]
+[ext_resource type="PackedScene" uid="uid://b2bap0ep06arb" path="res://UI/MobileInput/ButtonDodge/button_dodge.tscn" id="3_8n3c2"]
+[ext_resource type="PackedScene" uid="uid://cb1gwekpgb0gg" path="res://UI/MobileInput/ButtonJump/button_jump.tscn" id="4_kki5q"]
+[ext_resource type="Script" path="res://Player/LabelVida.gd" id="5_yfr53"]
+[ext_resource type="Script" path="res://LabelFPS.gd" id="6_qff6e"]
+[ext_resource type="Script" path="res://ButtonFullscreen.gd" id="7_voqpb"]
+[ext_resource type="Texture2D" uid="uid://dx2ttomv2wi7e" path="res://Player/PersonagemPrincipalCabeca.png" id="8_y5h0r"]
+[ext_resource type="Texture2D" uid="uid://b4rnfl3irsv2q" path="res://UI/CoinsIcon.png" id="9_4wfuk"]
+[ext_resource type="Script" path="res://UI/ProgressBar.gd" id="10_3ecej"]
+
+[node name="PrincipalUI" type="CanvasLayer"]
+
+[node name="MobileInputs" type="Node2D" parent="."]
+
+[node name="JoystickBase" parent="MobileInputs" instance=ExtResource("1_gfeuy")]
+position = Vector2(1, 448)
+
+[node name="Buttons" type="Node2D" parent="MobileInputs"]
+
+[node name="ButtonAttack" parent="MobileInputs/Buttons" instance=ExtResource("2_i27l5")]
+position = Vector2(935, 586)
+scale = Vector2(1.5, 1.5)
+
+[node name="ButtonDodge" parent="MobileInputs/Buttons" instance=ExtResource("3_8n3c2")]
+position = Vector2(995, 586)
+scale = Vector2(1.5, 1.5)
+
+[node name="ButtonJump" parent="MobileInputs/Buttons" instance=ExtResource("4_kki5q")]
+position = Vector2(1053, 586)
+scale = Vector2(1.5, 1.5)
+
+[node name="LabelVida" type="Label" parent="."]
+modulate = Color(0, 0.803922, 0, 1)
+offset_left = 396.0
+offset_top = 4.0
+offset_right = 469.0
+offset_bottom = 30.0
+text = "/ Vida máxima: 100
+"
+script = ExtResource("5_yfr53")
+
+[node name="LabelFPS" type="Label" parent="."]
+offset_left = 6.0
+offset_top = 71.0
+offset_right = 61.0
+offset_bottom = 97.0
+text = "FPS: 60"
+script = ExtResource("6_qff6e")
+
+[node name="ButtonFullscreen" type="Button" parent="."]
+visible = false
+offset_right = 120.0
+offset_bottom = 31.0
+text = "Fullscreen [F4]"
+script = ExtResource("7_voqpb")
+
+[node name="PlayerLife" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
+scale = Vector2(2, 2)
+texture = ExtResource("8_y5h0r")
+
+[node name="Coins" type="Sprite2D" parent="."]
+position = Vector2(85, 52)
+texture = ExtResource("9_4wfuk")
+
+[node name="CoinText" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(0, 0.803922, 0, 1)
+offset_left = 71.0
+offset_top = 3.0
+offset_right = 673.0
+offset_bottom = 30.0
+script = ExtResource("10_3ecej")
+
+[connection signal="pressed" from="ButtonFullscreen" to="ButtonFullscreen" method="_on_pressed"]

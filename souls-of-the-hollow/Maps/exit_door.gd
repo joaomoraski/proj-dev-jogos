@@ -14,8 +14,10 @@ func _input(event):
 		if get_overlapping_bodies().size() > 1:
 			next_level()
 			
+# Essa logica aq é so quando matar o boss fina lta, to usando agora ja pra deixar adaptado
+
 func next_level():
 	game_controller.times_finished += 1
-	game_controller.setup_player(game_controller.player_life, 25)
+	game_controller.no_reset_life = true
 	get_tree().reload_current_scene()
 	pass
