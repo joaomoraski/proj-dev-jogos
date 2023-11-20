@@ -166,16 +166,9 @@ func _on_animated_sprite_2d_animation_finished():
 		$AttackCollision/CollisionShape2D.disabled = true
 		isAttacking = false
 
-#func _on_hitbox_body_entered(body):
-#	if body.is_in_group("enemies"):
-#		game_controller.player_life -= game_controller.enemies_damage["Slime"]
-#		game_controller.get_camera().shake_camera(3, 0.3)
-#		popup(str(game_controller.enemies_damage["Slime"]))
-
 func _on_hitbox_area_entered(area):
 	if area.is_in_group("slimeAttack"):
 		health -= game_controller.enemies_damage["Slime"]
 		game_controller.player_health = health
 		game_controller.get_camera().shake_camera(3, 0.3)
-		
 		popup(str(game_controller.enemies_damage["Slime"]))

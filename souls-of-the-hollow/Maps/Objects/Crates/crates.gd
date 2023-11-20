@@ -5,6 +5,9 @@ extends StaticBody2D
 
 var _player: Player
 
+func _init() -> void:
+	set_player(game_controller._player)
+
 func set_player(player: Player):
 	_player = player
 

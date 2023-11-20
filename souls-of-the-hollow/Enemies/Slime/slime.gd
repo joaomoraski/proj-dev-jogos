@@ -34,6 +34,7 @@ func set_player(player: Player):
 	_player = player
 
 func setup():
+	set_player(game_controller._player)
 	var times = game_controller.times_finished
 	if times:
 		var multiplier = 0.05 * times
@@ -81,7 +82,6 @@ func popup(message: String):
 func _get_direction():
 	return Vector2(randf_range(-1, 1), -randf()) * 16
 	
-	
 # Esquerda -1
 # direita 1
 func Move():
@@ -114,11 +114,22 @@ func _on_hitbox_area_entered(area):
 func _on_vision_box_body_entered(body):
 	if body.name == "Player":
 		player_is_on_area = true
+		var direction_to_player = position.direction_to(body.position)
+		# Obtém o ângulo entre a direção atual do inimigo e a direção para o jogador
+		var direction = Vector2(cos(rotation), sin(rotation))
+		var angle_difference = direction.angle_to(direction_to_player)
+		# Define um limiar de ângulo (por exemplo, 90 graus)
+		var limiar_angular = deg_to_rad(90)
+		# Verifica se o jogador está atrás do inimigo
+		if abs(angle_difference) > limiar_angular:
+			# O jogador está atrás do inimigo
+			invert_moving()
+	if body.is_in_group("breakables") or body.is_in_group("chests"):
+		invert_moving()
 
 func _on_vision_box_body_exited(body):
 	if body.name == "Player":
 		player_is_on_area = false
-		velocity.x = 0
 
 func detect_turn_around():
 	if not $RayCast2D.is_colliding() and is_on_floor():

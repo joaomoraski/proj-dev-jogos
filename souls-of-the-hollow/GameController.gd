@@ -25,19 +25,12 @@ func init(player, camera, player_health_bar) -> void:
 	_player_health_bar = player_health_bar
 	_camera = camera
 	get_tree().call_group("player_healthbar", "set_player_health_bar", _player_health_bar)
-	get_tree().call_group("enemies", "set_player", _player)
-	get_tree().call_group("breakables", "set_player", _player)
+#	get_tree().call_group("enemies", "set_player", _player)
+#	get_tree().call_group("breakables", "set_player", _player)
 	get_tree().call_group("timerDash", "set_player", _player)
 
 func get_camera() -> Camera2D:
 	return _camera
-
-#func setup_player():
-#	if times_finished:
-#		player_life += (100 * (0.02 * game_controller.times_finished))
-#		player_max_health += (100 * (0.02 * game_controller.times_finished))
-#		print(str(player_life) + " " + str(player_max_health))
-#		player_damage += (25 * (0.02 * game_controller.times_finished))
 
 func setup_enemy_damage(enemy, damage):
 	enemies_damage[enemy] = damage
