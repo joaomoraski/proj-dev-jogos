@@ -1,0 +1,111 @@
+[gd_scene load_steps=13 format=3 uid="uid://wyunibydj0n0"]
+
+[ext_resource type="Script" path="res://FireSkeleton.gd" id="1_3ykhc"]
+[ext_resource type="Texture2D" uid="uid://br63vhlp7s3oi" path="res://Enemies/FireSkeleton/FireSkeleton.png" id="2_7r068"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qg412"]
+size = Vector2(10, 30)
+
+[sub_resource type="Animation" id="Animation_f23f2"]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_rkbgy"]
+resource_name = "Attack"
+
+[sub_resource type="Animation" id="Animation_l8cwu"]
+resource_name = "Die"
+
+[sub_resource type="Animation" id="Animation_ohktp"]
+resource_name = "Walk"
+
+[sub_resource type="Animation" id="Animation_muuhg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3kpsv"]
+_data = {
+"Attack": SubResource("Animation_rkbgy"),
+"Die": SubResource("Animation_l8cwu"),
+"Idle": SubResource("Animation_f23f2"),
+"RESET": SubResource("Animation_muuhg"),
+"Walk": SubResource("Animation_ohktp")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6lqij"]
+size = Vector2(12, 31)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8bkqq"]
+radius = 30.0167
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_solt7"]
+size = Vector2(8, 7)
+
+[node name="FireSkeleton" type="CharacterBody2D" groups=["enemies"]]
+script = ExtResource("1_3ykhc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 4)
+shape = SubResource("RectangleShape2D_qg412")
+debug_color = Color(0.721569, 0.478431, 0, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_7r068")
+hframes = 5
+vframes = 5
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3kpsv")
+}
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(1, 4.5)
+shape = SubResource("RectangleShape2D_6lqij")
+debug_color = Color(0.870588, 0, 0.0862745, 0.419608)
+
+[node name="VisionBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionBox" groups=["enemies"]]
+shape = SubResource("CircleShape2D_8bkqq")
+
+[node name="AttackBox" type="Area2D" parent="." groups=["fireSkeletonAttack"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
+position = Vector2(-9, -13)
+shape = SubResource("RectangleShape2D_solt7")
+disabled = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-6, -5)
+target_position = Vector2(0, 24)
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="VisionBox" to="." method="_on_vision_box_body_entered"]
+[connection signal="body_exited" from="VisionBox" to="." method="_on_vision_box_body_exited"]

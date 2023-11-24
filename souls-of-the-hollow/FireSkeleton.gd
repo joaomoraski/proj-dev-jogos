@@ -1,23 +1,23 @@
-class_name Slime
+class_name FireSkeleton
 extends CharacterBody2D
 
 @export var damage_node: PackedScene
 # Finite state machine
-enum SlimeStates {MOVE, ATTACK, DEAD, HURT} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
-var CurrentState = SlimeStates.MOVE # Estado atual do personagem
+enum SkeletonStates {MOVE, ATTACK, DEAD, HURT} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
+var CurrentState = SkeletonStates.MOVE # Estado atual do personagem
 
 
-var speed = 32
-const BASE_HEALTH = 100
-const BASE_DAMAGE = 10
-var _is_moving_right: bool = true
+var speed = 28
+const BASE_HEALTH = 180
+const BASE_DAMAGE = 25
+var _is_moving_left: bool = true
 var _can_attack: bool = true
 var _can_move: bool = true
 var cooldown_time: float = 1.5  # Tempo de cooldown em segundos
 var cooldown_timer: float = 0.0  # Temporizador para controlar o cooldown
 
-var health = 100
-var damage = 10
+var health = 180
+var damage = 25
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var _player: Player
@@ -41,19 +41,19 @@ func setup():
 		var multiplier = 0.05 * times
 		health += BASE_HEALTH * multiplier
 		damage += BASE_DAMAGE * multiplier
-		game_controller.setup_enemy_damage("Slime", damage)
+		game_controller.setup_enemy_damage("Skeleton", damage)
 
 func _physics_process(delta):
-	if anterior_position == position and not player_is_on_area and CurrentState != SlimeStates.ATTACK:
+	if anterior_position == position and not player_is_on_area and CurrentState != SkeletonStates.ATTACK:
 		invert_moving()
 	anterior_position = position
 	attack_logic(delta)
-	if _can_move and CurrentState == SlimeStates.HURT:
-		CurrentState = SlimeStates.MOVE
+	if _can_move and CurrentState == SkeletonStates.HURT:
+		CurrentState = SkeletonStates.MOVE
 		$Hitbox.monitoring = true
 	# Adiciona a gravidade ao jogo
 	velocity.y += gravity * delta
-	if CurrentState == SlimeStates.MOVE:
+	if CurrentState == SkeletonStates.MOVE:
 		Move()
 	verify_death()
 	move_and_slide()
@@ -61,7 +61,7 @@ func _physics_process(delta):
 func verify_death():
 	if health <= 0:
 		velocity = Vector2(0,0)
-		CurrentState = SlimeStates.DEAD
+		CurrentState = SkeletonStates.DEAD
 		$AnimationPlayer.play("Dead")
 		$CollisionShape2D.disabled = true
 		$Hitbox/CollisionShape2D.disabled = true
@@ -86,6 +86,8 @@ func popup(message: String):
 func _get_direction():
 	return Vector2(randf_range(-1, 1), -randf()) * 16
 	
+# Esquerda -1
+# direita 1
 func Move():
 	if player_is_on_area and position.distance_to(_player.position) <= 15.0 and _can_attack:
 		$AnimationPlayer.play("Attack")
@@ -93,19 +95,20 @@ func Move():
 
 	if $AnimationPlayer.current_animation == "Attack":
 		return
-	velocity.x = speed if _is_moving_right else -speed
+	velocity.x = -speed if _is_moving_left else speed
 	detect_turn_around()
 	
 func invert_moving():
-	_is_moving_right = !_is_moving_right
+	_is_moving_left = !_is_moving_left
 	scale.x = -scale.x
 #
 func _on_hitbox_area_entered(area):
-	if area.name == "AttackCollision" and CurrentState == SlimeStates.MOVE:
-		CurrentState = SlimeStates.HURT
+	if area.name == "AttackCollision" and CurrentState == SkeletonStates.MOVE:
+		CurrentState = SkeletonStates.HURT
 		$Hitbox.monitoring = false
 		cooldown_timer = cooldown_time
 		health -= game_controller.player_damage
+		velocity = Vector2((speed*-1) * 2,-200)
 		game_controller.get_camera().shake_camera(3, 0.3)
 		popup(str(game_controller.player_damage))
 	if area.name == "PresenceCollision":

@@ -15,7 +15,7 @@ var actual_stage = 1
 var boss_stages = [3,6,9]
 var maps_positions_list = {
 	0: Vector2(100,100),
-	1: Vector2(25, 144),
+	1: Vector2(29, 48),
 	2: Vector2(25, 144)
 }
 var times_finished = 0

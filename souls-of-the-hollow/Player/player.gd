@@ -149,7 +149,7 @@ func Die():
 	$PlayerHitBox/CollisionShape2D.disabled = true
 	await $AnimatedSprite2D.animation_finished
 	game_controller.actual_stage=1
-	game_controller.change_stage(load("res://map_01.tscn"))
+	game_controller.change_stage(load("res://Maps/01/map_01.tscn"))
 	game_controller.reset_player()
 	$PlayerHitBox/CollisionShape2D.disabled = false
 

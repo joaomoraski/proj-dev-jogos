@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bv7k4p1jgeyw8"
-path="res://.godot/imported/DemonSlimeShoot.png-5a49309c75185097569290d90bfc6d82.ctex"
+uid="uid://bffer2lu3fj2f"
+path="res://.godot/imported/FireAttack.png-9e54a3b94c9ca677a6b03d9dcf1bd81f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Enemies/Slime/DemonSlimeShoot.png"
-dest_files=["res://.godot/imported/DemonSlimeShoot.png-5a49309c75185097569290d90bfc6d82.ctex"]
+source_file="res://Enemies/Demon/FireAttack.png"
+dest_files=["res://.godot/imported/FireAttack.png-9e54a3b94c9ca677a6b03d9dcf1bd81f.ctex"]
 
 [params]
 

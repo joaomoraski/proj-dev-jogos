@@ -411,7 +411,7 @@ damage_node = ExtResource("2_uhget")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hxcyt")
-animation = &"Jump"
+animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 10
