@@ -6,6 +6,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qg412"]
 size = Vector2(10, 30)
 
+[sub_resource type="Animation" id="Animation_rkbgy"]
+resource_name = "Attack"
+
+[sub_resource type="Animation" id="Animation_l8cwu"]
+resource_name = "Die"
+
 [sub_resource type="Animation" id="Animation_f23f2"]
 resource_name = "Idle"
 tracks/0/type = "value"
@@ -21,15 +27,6 @@ tracks/0/keys = {
 "values": [0, 1, 2]
 }
 
-[sub_resource type="Animation" id="Animation_rkbgy"]
-resource_name = "Attack"
-
-[sub_resource type="Animation" id="Animation_l8cwu"]
-resource_name = "Die"
-
-[sub_resource type="Animation" id="Animation_ohktp"]
-resource_name = "Walk"
-
 [sub_resource type="Animation" id="Animation_muuhg"]
 length = 0.001
 tracks/0/type = "value"
@@ -44,6 +41,9 @@ tracks/0/keys = {
 "update": 1,
 "values": [1]
 }
+
+[sub_resource type="Animation" id="Animation_ohktp"]
+resource_name = "Walk"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3kpsv"]
 _data = {
