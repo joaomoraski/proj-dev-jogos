@@ -261,7 +261,7 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisionBox" groups=["enemies"]]
 shape = SubResource("CircleShape2D_l4t6d")
 
-[node name="AttackBox" type="Area2D" parent="." groups=["slimeAttack"]]
+[node name="AttackBox" type="Area2D" parent="." groups=["Slime"]]
 position = Vector2(0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]

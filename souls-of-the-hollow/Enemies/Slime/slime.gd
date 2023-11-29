@@ -25,6 +25,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var _motion: Vector2
 var player_is_on_area = false
 var anterior_position
+var is_black_slime
 
 func _ready():
 	$AnimationPlayer.play("Idle")
@@ -35,15 +36,24 @@ func set_player(player: Player):
 	_player = player
 
 func setup():
+	var prob_black_slime = 40 # %
 	set_player(game_controller._player)
 	var times = game_controller.times_finished
+	var multiplier = 0.05 * times
 	if times:
-		var multiplier = 0.05 * times
 		health += BASE_HEALTH * multiplier
 		damage += BASE_DAMAGE * multiplier
 		game_controller.setup_enemy_damage("Slime", damage)
+	if game_controller.actual_stage > 1 and randf_range(0,100) < prob_black_slime:
+		health += (25 * (multiplier if multiplier else 1))
+		damage += (7 * (multiplier if multiplier else 1))
+		$AttackBox.remove_from_group("Slime")
+		$AttackBox.add_to_group("BlackSlime")
+		$Sprite2D.modulate = Color(1, 0, 0, 1)
+		game_controller.setup_enemy_damage("BlackSlime", damage)
 
 func _physics_process(delta):
+	# Logica para ele nao ficar preso na mesma posição caso algo o trave
 	if anterior_position == position and not player_is_on_area and CurrentState != SlimeStates.ATTACK:
 		invert_moving()
 	anterior_position = position
@@ -108,8 +118,6 @@ func _on_hitbox_area_entered(area):
 		health -= game_controller.player_damage
 		game_controller.get_camera().shake_camera(3, 0.3)
 		popup(str(game_controller.player_damage))
-	if area.name == "PresenceCollision":
-		invert_moving()
 		
 func _on_vision_box_body_entered(body):
 	if body.name == "Player":

@@ -78,7 +78,7 @@ func _physics_process(delta):
 		game_controller.player_health = 0
 		
 	if Input.is_action_just_pressed("ui_end"):
-		position = Vector2(1163, 113) 
+		position = Vector2(2228, 140) 
 		
 	if Input.is_action_just_pressed("hard"):
 		game_controller.times_finished += 1
@@ -161,8 +161,9 @@ func _on_animated_sprite_2d_animation_finished():
 		$AttackCollision/CollisionShape2D.disabled = true
 		isAttacking = false
 
-func _on_hitbox_area_entered(area):
-	if area.is_in_group("slimeAttack"):
-		game_controller.player_health -= game_controller.enemies_damage["Slime"]
+func _on_hitbox_area_entered(area: Area2D):
+	if area.get_parent().is_in_group("enemies"):
+		var enemyDamage = area.get_groups()[0]
+		game_controller.player_health -= game_controller.enemies_damage[enemyDamage]
 		game_controller.get_camera().shake_camera(3, 0.3)
-		popup(str(game_controller.enemies_damage["Slime"]))
+		popup(str(game_controller.enemies_damage[enemyDamage]))

@@ -19,8 +19,10 @@ var maps_positions_list = {
 	2: Vector2(25, 144)
 }
 var times_finished = 0
+# Default
 var enemies_damage = {
-	"Slime": 10
+	"Slime": 10,
+	"BlackSlime": 17
 }
 # PRIVATE METHODS
 ############################################
