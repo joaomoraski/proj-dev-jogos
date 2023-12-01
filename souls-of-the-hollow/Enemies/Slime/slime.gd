@@ -6,7 +6,6 @@ extends CharacterBody2D
 enum SlimeStates {MOVE, ATTACK, DEAD, HURT} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
 var CurrentState = SlimeStates.MOVE # Estado atual do personagem
 
-
 var speed = 32
 const BASE_HEALTH = 100
 const BASE_DAMAGE = 10
@@ -15,6 +14,8 @@ var _can_attack: bool = true
 var _can_move: bool = true
 var cooldown_time: float = 1.5  # Tempo de cooldown em segundos
 var cooldown_timer: float = 0.0  # Temporizador para controlar o cooldown
+var is_from_spawner: bool = false
+signal die_on_spawner
 
 var health = 100
 var damage = 10
@@ -76,6 +77,9 @@ func verify_death():
 		$CollisionShape2D.disabled = true
 		$Hitbox/CollisionShape2D.disabled = true
 		await $AnimationPlayer.animation_finished
+		if is_from_spawner:
+			emit_signal("die_on_spawner")
+			is_from_spawner = false
 		queue_free()
 
 func attack_logic(delta):

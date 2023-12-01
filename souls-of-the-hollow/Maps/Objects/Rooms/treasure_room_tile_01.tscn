@@ -2,9 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://c8om0c18mbcye" path="res://Maps/01/Primera Fase Tileset.png" id="1_0gwiu"]
 [ext_resource type="Script" path="res://Maps/Objects/Rooms/treasure_room_tile_01.gd" id="1_1n4gx"]
-[ext_resource type="PackedScene" uid="uid://y0apbebnl2yq" path="res://Player/player.tscn" id="2_jtewf"]
-[ext_resource type="Script" path="res://Player/Camera2D.gd" id="3_gf5mf"]
-[ext_resource type="PackedScene" uid="uid://fysa5u35ksds" path="res://UI/principal_ui.tscn" id="4_08elv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5fn82"]
 texture = ExtResource("1_0gwiu")
@@ -499,8 +496,15 @@ size = Vector2(98, 68.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s5w8j"]
 size = Vector2(98, 68.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6mtgq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_43cx4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_da1un"]
+
 [node name="TreasureRoomTile01" type="Node2D"]
 script = ExtResource("1_1n4gx")
+enemies_total = 10
 metadata/_edit_horizontal_guides_ = [241.0]
 metadata/_edit_vertical_guides_ = [384.0]
 
@@ -508,7 +512,7 @@ metadata/_edit_vertical_guides_ = [384.0]
 tile_set = SubResource("TileSet_jn21f")
 format = 2
 layer_0/name = "Room"
-layer_0/tile_data = PackedInt32Array(30, 458752, 0, 29, 65536, 3, 28, 65536, 3, 27, 65536, 3, 26, 65536, 3, 21, 65536, 3, 20, 65536, 3, 19, 65536, 3, 18, 0, 3, 13, 131072, 3, 12, 65536, 3, 11, 65536, 3, 10, 65536, 3, 9, 65536, 3, 8, 65536, 3, 7, 65536, 3, 6, 65536, 3, 5, 65536, 3, 4, 65536, 3, 3, 65536, 3, 2, 65536, 3, 1, 65536, 3, 720896, 196608, 1, 655360, 458752, 4, 589824, 196608, 0, 262144, 196608, 2, 196608, 196608, 1, 131072, 196608, 1, 65536, 196608, 1, 0, 262144, 0, 786432, 196608, 1, 917534, 458752, 3, 851998, 196608, 1, 786462, 196608, 1, 720926, 196608, 1, 655390, 196608, 1, 589854, 196608, 0, 262174, 196608, 2, 196638, 196608, 1, 131102, 196608, 1, 65566, 196608, 1, 917533, 65536, 3, 917532, 65536, 3, 917531, 65536, 3, 917530, 65536, 3, 917529, 65536, 3, 25, 65536, 3, 917528, 65536, 3, 24, 65536, 3, 917527, 65536, 3, 23, 65536, 3, 917526, 65536, 3, 22, 65536, 3, 917525, 65536, 3, 917524, 65536, 3, 917523, 65536, 3, 917522, 0, 3, 917517, 131072, 3, 917516, 65536, 3, 917515, 65536, 3, 917514, 65536, 3, 917513, 65536, 3, 917512, 65536, 3, 917511, 65536, 3, 917510, 65536, 3, 917509, 65536, 3, 917508, 65536, 3, 917507, 65536, 3, 917506, 65536, 3, 917505, 65536, 3, 917504, 262144, 3, 851968, 196608, 1, 720895, 65536, 3, 720894, 65536, 3, 720893, 65536, 3, 720892, 65536, 3, 720891, 0, 3, 1179661, 0, 2, 1179662, 65536, 2, 1179663, 65536, 2, 1245200, 0, 2, 1245201, 65536, 2, 1245202, 65536, 2, 1245203, 131072, 2, 1179667, 131072, 1, 1179666, 65536, 1, 1179665, 65536, 1, 1179664, 393216, 1, 1114126, 65536, 0, 1114125, 0, 0, 1114127, 65536, 0, 1114128, 65536, 0, 1114129, 65536, 0, 1114130, 65536, 0, 1114131, 327680, 0, 1114132, 131072, 3, 589856, 0, 3, 589857, 65536, 3, 589858, 65536, 3, 589859, 65536, 3, 589860, 65536, 3, 589861, 458752, 0, 655397, 262144, 3, 655398, 65536, 3, 655399, 131072, 3)
+layer_0/tile_data = PackedInt32Array(30, 458752, 0, 29, 65536, 3, 28, 65536, 3, 27, 65536, 3, 26, 65536, 3, 21, 65536, 3, 20, 65536, 3, 19, 65536, 3, 18, 0, 3, 13, 131072, 3, 12, 65536, 3, 11, 65536, 3, 10, 65536, 3, 9, 65536, 3, 8, 65536, 3, 7, 65536, 3, 6, 65536, 3, 5, 65536, 3, 4, 65536, 3, 3, 65536, 3, 2, 65536, 3, 1, 65536, 3, 720896, 196608, 1, 655360, 196608, 1, 589824, 196608, 0, 262144, 196608, 2, 196608, 196608, 1, 131072, 196608, 1, 65536, 196608, 1, 0, 262144, 0, 786432, 196608, 1, 917534, 458752, 3, 851998, 196608, 1, 786462, 196608, 1, 720926, 196608, 1, 655390, 196608, 1, 589854, 196608, 0, 262174, 196608, 2, 196638, 196608, 1, 131102, 196608, 1, 65566, 196608, 1, 917533, 65536, 3, 917532, 65536, 3, 917531, 65536, 3, 917530, 65536, 3, 917529, 65536, 3, 25, 65536, 3, 917528, 65536, 3, 24, 65536, 3, 917527, 65536, 3, 23, 65536, 3, 917526, 65536, 3, 22, 65536, 3, 917517, 131072, 3, 917516, 65536, 3, 917515, 65536, 3, 917514, 65536, 3, 917513, 65536, 3, 917512, 65536, 3, 917511, 65536, 3, 917510, 65536, 3, 917509, 65536, 3, 917508, 65536, 3, 917507, 65536, 3, 917506, 65536, 3, 917505, 65536, 3, 917504, 262144, 3, 851968, 196608, 1, 917525, 65536, 3, 917522, 0, 3, 917524, 65536, 3, 917523, 65536, 3)
 layer_1/name = "Door01"
 layer_1/enabled = false
 layer_1/modulate = Color(1, 1, 1, 1)
@@ -572,20 +576,24 @@ shape = SubResource("RectangleShape2D_s5w8j")
 
 [node name="Spawner 1" type="Area2D" parent="Spawners"]
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner 1"]
+position = Vector2(111, 50)
+shape = SubResource("RectangleShape2D_6mtgq")
+debug_color = Color(0.94902, 0, 0.580392, 0.419608)
+
 [node name="Spawner 2" type="Area2D" parent="Spawners"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner 2"]
+position = Vector2(256, 50)
+shape = SubResource("RectangleShape2D_43cx4")
+debug_color = Color(0.94902, 0, 0.580392, 0.419608)
 
 [node name="Spawner 3" type="Area2D" parent="Spawners"]
 
-[node name="Player" parent="." instance=ExtResource("2_jtewf")]
-position = Vector2(531, 122)
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-z_index = 20
-position = Vector2(0, 3)
-zoom = Vector2(3, 3)
-script = ExtResource("3_gf5mf")
-
-[node name="PrincipalUI" parent="." instance=ExtResource("4_08elv")]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spawners/Spawner 3"]
+position = Vector2(401, 50)
+shape = SubResource("RectangleShape2D_da1un")
+debug_color = Color(0.94902, 0, 0.580392, 0.419608)
 
 [connection signal="body_entered" from="Entries/Door01" to="." method="_on_door_body_entered"]
 [connection signal="body_entered" from="Entries/Door02" to="." method="_on_door_body_entered"]
