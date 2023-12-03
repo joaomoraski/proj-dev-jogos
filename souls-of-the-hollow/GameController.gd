@@ -22,7 +22,8 @@ var times_finished = 0
 # Default
 var enemies_damage = {
 	"Slime": 10,
-	"BlackSlime": 17
+	"BlackSlime": 17,
+	"skeletonAttack": 25
 }
 # PRIVATE METHODS
 ############################################

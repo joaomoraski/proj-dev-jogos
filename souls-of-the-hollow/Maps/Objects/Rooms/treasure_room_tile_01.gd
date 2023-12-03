@@ -61,7 +61,7 @@ func get_random_spawner_position() -> Vector2:
 
 func _on_door_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.2).timeout
 		if $WallAndDoors.is_layer_enabled(1):
 			return
 		for i in range(1,5):

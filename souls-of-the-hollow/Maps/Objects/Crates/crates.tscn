@@ -84,7 +84,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mc53g"]
 size = Vector2(17.3333, 17.3333)
 
-[node name="Chest" type="StaticBody2D" groups=["breakables"]]
+[node name="Crates" type="StaticBody2D" groups=["breakables"]]
 light_mask = 17
 visibility_layer = 8
 collision_layer = 129

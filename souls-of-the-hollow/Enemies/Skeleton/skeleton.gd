@@ -6,15 +6,16 @@ extends CharacterBody2D
 enum SkeletonStates {MOVE, ATTACK, DEAD, HURT} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
 var CurrentState = SkeletonStates.MOVE # Estado atual do personagem
 
-
-var speed = 28
-const BASE_HEALTH = 180
-const BASE_DAMAGE = 25
+var speed = 20
+const BASE_HEALTH = 100
+const BASE_DAMAGE = 10
 var _is_moving_left: bool = true
 var _can_attack: bool = true
 var _can_move: bool = true
 var cooldown_time: float = 1.5  # Tempo de cooldown em segundos
 var cooldown_timer: float = 0.0  # Temporizador para controlar o cooldown
+var is_from_spawner: bool = false
+signal die_on_spawner
 
 var health = 180
 var damage = 25
@@ -35,15 +36,24 @@ func set_player(player: Player):
 	_player = player
 
 func setup():
+#	var prob_black_slime = 40 # %
 	set_player(game_controller._player)
 	var times = game_controller.times_finished
+	var multiplier = 0.05 * times
 	if times:
-		var multiplier = 0.05 * times
 		health += BASE_HEALTH * multiplier
 		damage += BASE_DAMAGE * multiplier
 		game_controller.setup_enemy_damage("Skeleton", damage)
+#	if game_controller.actual_stage > 1 and randf_range(0,100) < prob_black_slime:
+#		health += (25 * (multiplier if multiplier else 1))
+#		damage += (7 * (multiplier if multiplier else 1))
+#		$AttackBox.remove_from_group("Slime")
+#		$AttackBox.add_to_group("BlackSlime")
+#		$Sprite2D.modulate = Color(1, 0, 0, 1)
+#		game_controller.setup_enemy_damage("BlackSlime", damage)
 
 func _physics_process(delta):
+	# Logica para ele nao ficar preso na mesma posição caso algo o trave
 	if anterior_position == position and not player_is_on_area and CurrentState != SkeletonStates.ATTACK:
 		invert_moving()
 	anterior_position = position
@@ -66,6 +76,9 @@ func verify_death():
 		$CollisionShape2D.disabled = true
 		$Hitbox/CollisionShape2D.disabled = true
 		await $AnimationPlayer.animation_finished
+		if is_from_spawner:
+			emit_signal("die_on_spawner")
+			is_from_spawner = false
 		queue_free()
 
 func attack_logic(delta):
@@ -86,19 +99,26 @@ func popup(message: String):
 func _get_direction():
 	return Vector2(randf_range(-1, 1), -randf()) * 16
 	
-# Esquerda -1
-# direita 1
 func Move():
-	if player_is_on_area and position.distance_to(_player.position) <= 15.0 and _can_attack:
+	if is_on_floor() and $AnimationPlayer.current_animation != "Attack":
+		if velocity.x == 0.0:
+			$AnimationPlayer.play("Idle")
+		else:
+			$AnimationPlayer.play("Walk")
+	
+	if player_is_on_area and get_global_position().distance_to(_player.get_global_position()) <= 15.0 and _can_attack:
 		$AnimationPlayer.play("Attack")
 		cooldown_timer = cooldown_time
+		CurrentState = SkeletonStates.ATTACK
 
 	if $AnimationPlayer.current_animation == "Attack":
 		return
-	velocity.x = -speed if _is_moving_left else speed
+	velocity.x = speed if _is_moving_left else -speed
 	detect_turn_around()
 	
 func invert_moving():
+	if CurrentState != SkeletonStates.MOVE:
+		return
 	_is_moving_left = !_is_moving_left
 	scale.x = -scale.x
 #
@@ -108,26 +128,24 @@ func _on_hitbox_area_entered(area):
 		$Hitbox.monitoring = false
 		cooldown_timer = cooldown_time
 		health -= game_controller.player_damage
-		velocity = Vector2((speed*-1) * 2,-200)
 		game_controller.get_camera().shake_camera(3, 0.3)
 		popup(str(game_controller.player_damage))
-	if area.name == "PresenceCollision":
-		invert_moving()
 		
 func _on_vision_box_body_entered(body):
 	if body.name == "Player":
 		player_is_on_area = true
-		var direction_to_player = position.direction_to(body.position)
+		var direction_to_player = get_global_position().direction_to(body.get_global_position())
 		# Obtém o ângulo entre a direção atual do inimigo e a direção para o jogador
 		var direction = Vector2(cos(rotation), sin(rotation))
 		var angle_difference = direction.angle_to(direction_to_player)
 		# Define um limiar de ângulo (por exemplo, 90 graus)
 		var limiar_angular = deg_to_rad(90)
 		# Verifica se o jogador está atrás do inimigo
+		print(abs(angle_difference), " ", limiar_angular)
 		if abs(angle_difference) > limiar_angular:
 			# O jogador está atrás do inimigo
 			invert_moving()
-	if body.is_in_group("breakables") or body.is_in_group("chests"):
+	if body.is_in_group("breakables") or body.is_in_group("chests") or body.is_in_group("enemies"):
 		invert_moving()
 
 func _on_vision_box_body_exited(body):
@@ -139,4 +157,4 @@ func detect_turn_around():
 		invert_moving()
 		
 func on_attack_animation_finished():
-	$AnimationPlayer.play("Idle")
+	CurrentState = SkeletonStates.MOVE

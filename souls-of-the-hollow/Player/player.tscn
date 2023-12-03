@@ -239,7 +239,7 @@ size = Vector2(14, 27)
 size = Vector2(16, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x0ynk"]
-size = Vector2(18, 27)
+size = Vector2(16, 27)
 
 [sub_resource type="Animation" id="Animation_q7qx5"]
 resource_name = "Attack"

@@ -101,7 +101,7 @@ func _get_direction():
 	return Vector2(randf_range(-1, 1), -randf()) * 16
 	
 func Move():
-	if player_is_on_area and position.distance_to(_player.position) <= 15.0 and _can_attack:
+	if player_is_on_area and get_global_position().distance_to(_player.get_global_position()) <= 15.0 and _can_attack:
 		$AnimationPlayer.play("Attack")
 		cooldown_timer = cooldown_time
 
@@ -126,7 +126,7 @@ func _on_hitbox_area_entered(area):
 func _on_vision_box_body_entered(body):
 	if body.name == "Player":
 		player_is_on_area = true
-		var direction_to_player = position.direction_to(body.position)
+		var direction_to_player = get_global_position().direction_to(body.get_global_position())
 		# Obtém o ângulo entre a direção atual do inimigo e a direção para o jogador
 		var direction = Vector2(cos(rotation), sin(rotation))
 		var angle_difference = direction.angle_to(direction_to_player)

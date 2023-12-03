@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://bkvcc2xwljlla"]
+[gd_scene load_steps=14 format=3 uid="uid://bkvcc2xwljlla"]
 
 [ext_resource type="Texture2D" uid="uid://c8om0c18mbcye" path="res://Maps/01/Primera Fase Tileset.png" id="1_0gwiu"]
 [ext_resource type="Script" path="res://Maps/Objects/Rooms/treasure_room_tile_01.gd" id="1_1n4gx"]
+[ext_resource type="PackedScene" uid="uid://dfsvncdotj1qm" path="res://Maps/Objects/Chest/chest.tscn" id="3_1yfr2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5fn82"]
 texture = ExtResource("1_0gwiu")
@@ -476,6 +477,9 @@ texture = ExtResource("1_0gwiu")
 8:4/0/terrains_peering_bit/left_side = 0
 8:4/0/terrains_peering_bit/top_side = 0
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_2joup"]
+scenes/2/scene = ExtResource("3_1yfr2")
+
 [sub_resource type="TileSet" id="TileSet_jn21f"]
 physics_layer_0/collision_layer = 129
 physics_layer_0/collision_mask = 129
@@ -483,6 +487,7 @@ terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.705882, 0, 0.337255, 1)
 sources/0 = SubResource("TileSetAtlasSource_5fn82")
+sources/1 = SubResource("TileSetScenesCollectionSource_2joup")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r4nqx"]
 size = Vector2(68.5, 98)
@@ -541,6 +546,13 @@ layer_4/y_sort_enabled = false
 layer_4/y_sort_origin = 0
 layer_4/z_index = 0
 layer_4/tile_data = PackedInt32Array(917518, 0, 3, 917519, 65536, 3, 917520, 65536, 3, 917521, 131072, 3)
+layer_5/name = "Chest"
+layer_5/enabled = true
+layer_5/modulate = Color(1, 1, 1, 1)
+layer_5/y_sort_enabled = false
+layer_5/y_sort_origin = 0
+layer_5/z_index = 0
+layer_5/tile_data = PackedInt32Array(655373, 0, 3, 655374, 65536, 3, 655375, 65536, 3, 655376, 65536, 3, 655377, 65536, 3, 655378, 65536, 3, 655379, 131072, 3, 589840, 1, 131072)
 
 [node name="Entries" type="Node2D" parent="."]
 

@@ -162,7 +162,7 @@ func _on_animated_sprite_2d_animation_finished():
 		isAttacking = false
 
 func _on_hitbox_area_entered(area: Area2D):
-	if area.get_parent().is_in_group("enemies"):
+	if area.get_parent().is_in_group("enemies") and area.get_groups().size() > 0:
 		var enemyDamage = area.get_groups()[0]
 		game_controller.player_health -= game_controller.enemies_damage[enemyDamage]
 		game_controller.get_camera().shake_camera(3, 0.3)

@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://db3ed67yuqiet"]
+[gd_scene load_steps=14 format=3 uid="uid://db3ed67yuqiet"]
 
 [ext_resource type="Texture2D" uid="uid://b4oxctvj78lx6" path="res://Enemies/Skeleton/Skeleton.png" id="1_b8gxa"]
 [ext_resource type="Script" path="res://Enemies/Skeleton/skeleton.gd" id="1_gsyls"]
+[ext_resource type="PackedScene" uid="uid://bwdkf3dk1c25m" path="res://UI/floating_numbers.tscn" id="2_oj27p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fgsqb"]
-size = Vector2(10, 31)
+size = Vector2(10, 30)
 
 [sub_resource type="Animation" id="Animation_ghutq"]
 resource_name = "Attack"
@@ -55,7 +56,33 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(-7.75, -13), Vector2(-10.75, -9.5), Vector2(-10.875, -5.25), Vector2(-12.0625, 3.125), Vector2(-11.0312, 7.5), Vector2(10.9844, 14.25), Vector2(11.4844, 10.25), Vector2(12.7422, 1.875), Vector2(13, -11.5), Vector2(-8, -13)]
+"values": [Vector2(8, -13), Vector2(13, -10), Vector2(15, -5), Vector2(12.062, 3.125), Vector2(11.031, 7.5), Vector2(-10.984, 14.25), Vector2(-11.484, 10.25), Vector2(-12.742, 1.875), Vector2(-13, -11.5), Vector2(8, -13)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AttackBox:monitorable")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, true, true, true, true, true, true, true, false]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_attack_animation_finished"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_2gemg"]
@@ -71,6 +98,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [8, 9, 10, 11, 12, 13]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_ax340"]
@@ -88,6 +127,42 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackBox/CollisionShape2D:shape:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(6, 8)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackBox/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(8, -6)]
 }
 
 [sub_resource type="Animation" id="Animation_tatw6"]
@@ -140,6 +215,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [Vector2(-10.75, -9.5)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AttackBox:monitorable")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_087kn"]
 resource_name = "Walk"
@@ -155,6 +242,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [3, 4, 5, 6, 7]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r14r1"]
 _data = {
@@ -166,7 +265,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ofpdy"]
-size = Vector2(14, 32)
+size = Vector2(10, 30)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7hwn0"]
 radius = 32.0624
@@ -176,9 +275,10 @@ size = Vector2(12.5, 15)
 
 [node name="Skeleton" type="CharacterBody2D" groups=["enemies"]]
 script = ExtResource("1_gsyls")
+damage_node = ExtResource("2_oj27p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 4.5)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_fgsqb")
 debug_color = Color(0, 0, 0, 0.419608)
 
@@ -195,13 +295,15 @@ libraries = {
 }
 
 [node name="Hitbox" type="Area2D" parent="."]
+collision_mask = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(1, 4)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_ofpdy")
 debug_color = Color(0.956863, 0, 0.533333, 0.419608)
 
 [node name="VisionBox" type="Area2D" parent="."]
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisionBox" groups=["enemies"]]
 shape = SubResource("CircleShape2D_7hwn0")
@@ -214,7 +316,7 @@ shape = SubResource("RectangleShape2D_5ur4y")
 debug_color = Color(0.160784, 0.643137, 0, 0.419608)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2(-7, -9)
+position = Vector2(11, -8)
 target_position = Vector2(0, 29)
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
