@@ -77,18 +77,24 @@ func remove_player_effect(type: String):
 	if type == "Speed":
 		_player.normalSpeed = 150.0
 	if type == "DoubleDamage":
-		game_controller.player_damage = 25
+		player_damage = 25
 		# Todo, verificar se esta com a espada
+		if _player.have_demon_sword and not times_finished:
+			player_damage+=base_demon_sword_damage
+			
 		if times_finished:
 			var multiplier = 0.02 * times_finished
-			game_controller.player_damage += (game_controller.player_damage * multiplier)
+			player_damage += (player_damage * multiplier)
+			if _player.have_demon_sword:
+				player_damage += (base_demon_sword_damage * multiplier)
+				
 	if type == "TripleDamageDoubleTaken":
-		game_controller.player_damage = 25
+		player_damage = 25
 		_player.double_damage_taken = false
 		# Todo, verificar se esta com a espada
 		if times_finished:
 			var multiplier = 0.02 * times_finished
-			game_controller.player_damage += (game_controller.player_damage * multiplier)
+			player_damage += (player_damage * multiplier)
 	
 func setup_enemy_damage(enemy, damage):
 	enemies_damage[enemy] = damage
