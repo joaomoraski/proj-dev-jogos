@@ -1,17 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://cqvyouxaljbow"]
+[gd_scene load_steps=10 format=3 uid="uid://cqvyouxaljbow"]
 
 [ext_resource type="Texture2D" uid="uid://ba3oowpbfc84f" path="res://Maps/Background/FirstMap/bg1.png" id="1_td28w"]
 [ext_resource type="Texture2D" uid="uid://c8om0c18mbcye" path="res://Maps/01/Primera Fase Tileset.png" id="2_tunjd"]
 [ext_resource type="PackedScene" uid="uid://bl2fdhp0vbrhc" path="res://Enemies/Slime/slime.tscn" id="3_h41qr"]
 [ext_resource type="PackedScene" uid="uid://bdutc403hjyxc" path="res://Maps/Objects/Crates/crates.tscn" id="4_ygg7r"]
-[ext_resource type="PackedScene" uid="uid://c06q1jawwv2ka" path="res://Maps/Objects/Coin/coin.tscn" id="5_801mh"]
 [ext_resource type="PackedScene" uid="uid://duhbwb3wyy5qm" path="res://Maps/exit_door.tscn" id="5_kkk8h"]
-[ext_resource type="PackedScene" uid="uid://db3ed67yuqiet" path="res://Enemies/Skeleton/skeleton.tscn" id="5_pqh43"]
 [ext_resource type="PackedScene" uid="uid://bkvcc2xwljlla" path="res://Maps/Objects/Rooms/treasure_room_tile_01.tscn" id="6_1hgo1"]
-[ext_resource type="PackedScene" uid="uid://cssem1ewm3yap" path="res://Maps/Objects/PowerUps/DoubleDamage/double_damage.tscn" id="7_e3h2q"]
-[ext_resource type="PackedScene" uid="uid://ded040418gnvb" path="res://Maps/Objects/PowerUps/Speed/speed.tscn" id="7_kk3tu"]
-[ext_resource type="PackedScene" uid="uid://bcuiqi2e4eii1" path="res://Maps/Objects/PowerUps/TripleDamageDoubleTaken/triple_damage_double_taken.tscn" id="9_26egx"]
-[ext_resource type="PackedScene" uid="uid://dy7ldjwy1e8yj" path="res://Maps/Objects/PowerUps/DemonSword/demon_sword.tscn" id="10_kf5iu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wd4vp"]
 texture = ExtResource("2_tunjd")
@@ -490,12 +484,6 @@ texture = ExtResource("2_tunjd")
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_32gmu"]
 scenes/1/scene = ExtResource("3_h41qr")
 scenes/2/scene = ExtResource("4_ygg7r")
-scenes/3/scene = ExtResource("5_801mh")
-scenes/4/scene = ExtResource("5_pqh43")
-scenes/5/scene = ExtResource("7_e3h2q")
-scenes/6/scene = ExtResource("7_kk3tu")
-scenes/7/scene = ExtResource("9_26egx")
-scenes/8/scene = ExtResource("10_kf5iu")
 
 [sub_resource type="TileSet" id="TileSet_kkrsb"]
 physics_layer_0/collision_layer = 524929
