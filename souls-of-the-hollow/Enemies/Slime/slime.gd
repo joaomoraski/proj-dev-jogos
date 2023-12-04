@@ -2,6 +2,7 @@ class_name Slime
 extends CharacterBody2D
 
 @export var damage_node: PackedScene
+var coin_scene = preload("res://Maps/Objects/Coin/coin.tscn")
 # Finite state machine
 enum SlimeStates {MOVE, ATTACK, DEAD, HURT} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
 var CurrentState = SlimeStates.MOVE # Estado atual do personagem
@@ -15,6 +16,7 @@ var _can_move: bool = true
 var cooldown_time: float = 1.5  # Tempo de cooldown em segundos
 var cooldown_timer: float = 0.0  # Temporizador para controlar o cooldown
 var is_from_spawner: bool = false
+var drop_done: bool = false
 signal die_on_spawner
 
 var health = 100
@@ -80,7 +82,35 @@ func verify_death():
 		if is_from_spawner:
 			emit_signal("die_on_spawner")
 			is_from_spawner = false
+		drop_itens()
 		queue_free()
+
+func drop_itens():
+	if drop_done:
+		return
+	# For now, just coins
+	if get_probability_drops("Coin"):
+		drop_coins(3)
+	drop_done = true
+	
+func drop_coins(quantity: int):
+	for i in range(quantity):
+		var coin = await coin_scene.instantiate()
+		coin.position = position
+		coin.position.x += randf_range(0,25)
+		coin.position.y += 10
+		coin.coinValue = randi_range(0,75)
+		get_tree().get_root().get_child(1).get_child(3).add_child(coin)
+
+func get_probability_drops(drop: String):
+	var probability = 0
+	if drop == "Coin":
+		probability = 0.25
+	if randf() < probability:
+		return true
+	else:
+		return false
+
 
 func attack_logic(delta):
 	# Atualizar o temporizador de cooldown
@@ -104,6 +134,7 @@ func Move():
 	if player_is_on_area and get_global_position().distance_to(_player.get_global_position()) <= 15.0 and _can_attack:
 		$AnimationPlayer.play("Attack")
 		cooldown_timer = cooldown_time
+		CurrentState = SlimeStates.ATTACK
 
 	if $AnimationPlayer.current_animation == "Attack":
 		return
@@ -111,11 +142,13 @@ func Move():
 	detect_turn_around()
 	
 func invert_moving():
+	if CurrentState != SlimeStates.MOVE:
+		return
 	_is_moving_right = !_is_moving_right
 	scale.x = -scale.x
 #
 func _on_hitbox_area_entered(area):
-	if area.name == "AttackCollision" and CurrentState == SlimeStates.MOVE:
+	if area.name == "AttackCollision" and CurrentState != SlimeStates.DEAD:
 		CurrentState = SlimeStates.HURT
 		$Hitbox.monitoring = false
 		cooldown_timer = cooldown_time
@@ -148,4 +181,5 @@ func detect_turn_around():
 		invert_moving()
 		
 func on_attack_animation_finished():
+	CurrentState = SlimeStates.MOVE
 	$AnimationPlayer.play("Idle")

@@ -8,6 +8,7 @@ var _camera: Camera2D
 # GLOBAL VARIABLES
 ############################################
 var no_reset_life: bool = false
+var player_coins: int = 0
 var player_health = 100
 var player_damage = 25
 var player_max_health = 100
@@ -36,9 +37,13 @@ func init(player, camera, player_health_bar) -> void:
 	_camera = camera
 	get_tree().call_group("player_healthbar", "set_player_health_bar", _player_health_bar)
 	get_tree().call_group("timerDash", "set_player", _player)
+	get_tree().call_group("power_up_dash", "set_player", _player)
 
 func get_camera() -> Camera2D:
 	return _camera
+
+func get_player() -> Player:
+	return _player
 
 func reset_player():
 	player_health = 100

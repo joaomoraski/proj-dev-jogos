@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://si8rllikwbkx"]
+
+[ext_resource type="Script" path="res://Maps/Objects/PowerUps/power_ups_times.gd" id="1_405u7"]
+
+[node name="PowerUpsTimes" type="Node2D" groups=["power_up_dash"]]
+script = ExtResource("1_405u7")
+
+[node name="PowerUpTimer" type="Timer" parent="."]

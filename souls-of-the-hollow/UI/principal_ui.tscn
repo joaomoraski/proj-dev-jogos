@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dx2ttomv2wi7e" path="res://Player/PersonagemPrincipalCabeca.png" id="8_y5h0r"]
 [ext_resource type="Texture2D" uid="uid://b4rnfl3irsv2q" path="res://UI/CoinsIcon.png" id="9_4wfuk"]
 [ext_resource type="Script" path="res://UI/ProgressBar.gd" id="10_3ecej"]
-[ext_resource type="Script" path="res://UI/Label.gd" id="11_7o5rv"]
+[ext_resource type="Script" path="res://UI/CoinText.gd" id="10_caq43"]
 
 [node name="PrincipalUI" type="CanvasLayer"]
 
@@ -44,6 +44,7 @@ text = "/ Vida máxima: 100
 script = ExtResource("5_yfr53")
 
 [node name="LabelFPS" type="Label" parent="."]
+visible = false
 offset_left = 6.0
 offset_top = 71.0
 offset_right = 61.0
@@ -58,7 +59,7 @@ offset_bottom = 31.0
 text = "Fullscreen [F4]"
 script = ExtResource("7_voqpb")
 
-[node name="PlayerLife" type="Sprite2D" parent="."]
+[node name="PlayerIcon" type="Sprite2D" parent="."]
 position = Vector2(32, 32)
 scale = Vector2(2, 2)
 texture = ExtResource("8_y5h0r")
@@ -67,10 +68,13 @@ texture = ExtResource("8_y5h0r")
 position = Vector2(85, 52)
 texture = ExtResource("9_4wfuk")
 
-[node name="CoinText" type="Label" parent="."]
-visible = false
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="CoinText" type="Label" parent="Coins"]
+offset_left = 14.0
+offset_top = -12.0
+offset_right = 54.0
+offset_bottom = 14.0
+text = "00"
+script = ExtResource("10_caq43")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 modulate = Color(0, 0.803922, 0, 1)
@@ -79,13 +83,5 @@ offset_top = 3.0
 offset_right = 673.0
 offset_bottom = 30.0
 script = ExtResource("10_3ecej")
-
-[node name="Label" type="Label" parent="."]
-offset_left = 126.0
-offset_top = 73.0
-offset_right = 166.0
-offset_bottom = 96.0
-text = "player position: "
-script = ExtResource("11_7o5rv")
 
 [connection signal="pressed" from="ButtonFullscreen" to="ButtonFullscreen" method="_on_pressed"]

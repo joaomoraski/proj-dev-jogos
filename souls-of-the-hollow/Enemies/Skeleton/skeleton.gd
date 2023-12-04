@@ -2,6 +2,7 @@ class_name Skeleton
 extends CharacterBody2D
 
 @export var damage_node: PackedScene
+var coin_scene = preload("res://Maps/Objects/Coin/coin.tscn")
 # Finite state machine
 enum SkeletonStates {MOVE, ATTACK, DEAD, HURT} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
 var CurrentState = SkeletonStates.MOVE # Estado atual do personagem
@@ -15,9 +16,11 @@ var _can_move: bool = true
 var cooldown_time: float = 1.5  # Tempo de cooldown em segundos
 var cooldown_timer: float = 0.0  # Temporizador para controlar o cooldown
 var is_from_spawner: bool = false
+var drop_done: bool = false
 signal die_on_spawner
 
-var health = 180
+# 180 health
+var health = 10
 var damage = 25
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -72,14 +75,41 @@ func verify_death():
 	if health <= 0:
 		velocity = Vector2(0,0)
 		CurrentState = SkeletonStates.DEAD
-		$AnimationPlayer.play("Dead")
+		$AnimationPlayer.play("Die")
 		$CollisionShape2D.disabled = true
 		$Hitbox/CollisionShape2D.disabled = true
 		await $AnimationPlayer.animation_finished
 		if is_from_spawner:
 			emit_signal("die_on_spawner")
 			is_from_spawner = false
+		drop_itens()
 		queue_free()
+		
+func drop_itens():
+	if drop_done:
+		return
+	# For now, just coins
+	if get_probability_drops("Coin"):
+		drop_coins(3)
+	drop_done = true
+	
+func drop_coins(quantity: int):
+	for i in range(quantity):
+		var coin = await coin_scene.instantiate()
+		coin.position = position
+		coin.position.x += randf_range(0,25)
+		coin.position.y += 10
+		coin.coinValue = randi_range(0,75)
+		get_tree().get_root().get_child(1).get_child(3).add_child(coin)
+
+func get_probability_drops(drop: String):
+	var probability = 0
+	if drop == "Coin":
+		probability = 0.25
+	if randf() < probability:
+		return true
+	else:
+		return false
 
 func attack_logic(delta):
 	# Atualizar o temporizador de cooldown
@@ -123,7 +153,7 @@ func invert_moving():
 	scale.x = -scale.x
 #
 func _on_hitbox_area_entered(area):
-	if area.name == "AttackCollision" and CurrentState == SkeletonStates.MOVE:
+	if area.name == "AttackCollision" and CurrentState != SkeletonStates.DEAD:
 		CurrentState = SkeletonStates.HURT
 		$Hitbox.monitoring = false
 		cooldown_timer = cooldown_time
@@ -141,7 +171,6 @@ func _on_vision_box_body_entered(body):
 		# Define um limiar de ângulo (por exemplo, 90 graus)
 		var limiar_angular = deg_to_rad(90)
 		# Verifica se o jogador está atrás do inimigo
-		print(abs(angle_difference), " ", limiar_angular)
 		if abs(angle_difference) > limiar_angular:
 			# O jogador está atrás do inimigo
 			invert_moving()
