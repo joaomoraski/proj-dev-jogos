@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://cssem1ewm3yap"]
+
+[ext_resource type="Texture2D" uid="uid://f1ldh4utbs2p" path="res://Maps/Objects/PowerUps/DoubleDamage/DoubleDamage.png" id="1_i7d5h"]
+[ext_resource type="Script" path="res://Maps/Objects/PowerUps/DoubleDamage/double_damage.gd" id="1_nyv6r"]
+[ext_resource type="PackedScene" uid="uid://si8rllikwbkx" path="res://Maps/Objects/PowerUps/power_ups_times.tscn" id="2_ees4o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iwfu1"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p38um"]
+radius = 39.3192
+
+[node name="DoubleDamage" type="RigidBody2D"]
+collision_layer = 524288
+collision_mask = 524288
+script = ExtResource("1_nyv6r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_i7d5h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_iwfu1")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_p38um")
+
+[node name="PowerUpsTimes" parent="." instance=ExtResource("2_ees4o")]

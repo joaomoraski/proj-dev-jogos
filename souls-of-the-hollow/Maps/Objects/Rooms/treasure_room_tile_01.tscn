@@ -557,6 +557,8 @@ layer_5/tile_data = PackedInt32Array(655373, 0, 3, 655374, 65536, 3, 655375, 655
 [node name="Entries" type="Node2D" parent="."]
 
 [node name="Door01" type="Area2D" parent="Entries"]
+collision_layer = 129
+collision_mask = 129
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entries/Door01"]
@@ -564,6 +566,8 @@ position = Vector2(62, 113)
 shape = SubResource("RectangleShape2D_r4nqx")
 
 [node name="Door02" type="Area2D" parent="Entries"]
+collision_layer = 129
+collision_mask = 129
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entries/Door02"]
@@ -571,6 +575,8 @@ position = Vector2(435, 115)
 shape = SubResource("RectangleShape2D_iatx3")
 
 [node name="Door03" type="Area2D" parent="Entries"]
+collision_layer = 129
+collision_mask = 129
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entries/Door03"]
@@ -578,6 +584,8 @@ position = Vector2(255, 63)
 shape = SubResource("RectangleShape2D_mx4mq")
 
 [node name="Door04" type="Area2D" parent="Entries"]
+collision_layer = 129
+collision_mask = 129
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Entries/Door04"]

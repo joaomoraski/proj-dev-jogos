@@ -155,7 +155,7 @@ func invert_moving():
 func _on_hitbox_area_entered(area):
 	if area.name == "AttackCollision" and CurrentState != SkeletonStates.DEAD:
 		CurrentState = SkeletonStates.HURT
-		$Hitbox.monitoring = false
+		$Hitbox.set_deferred("monitoring", false)
 		cooldown_timer = cooldown_time
 		health -= game_controller.player_damage
 		game_controller.get_camera().shake_camera(3, 0.3)

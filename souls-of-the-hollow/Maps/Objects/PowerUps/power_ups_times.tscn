@@ -6,3 +6,5 @@
 script = ExtResource("1_405u7")
 
 [node name="PowerUpTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="PowerUpTimer" to="." method="_on_power_up_timer_timer_timeout"]

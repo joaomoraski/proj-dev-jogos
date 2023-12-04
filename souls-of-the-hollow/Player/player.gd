@@ -14,6 +14,8 @@ var _direction: float = 0.1
 var _double_jump: bool = false
 var isAttacking: bool = false
 var invertAttackCollision: int = -32
+var double_damage_taken: bool = false
+var have_demon_sword: bool = false
 
 const dashspeed = 300.0
 const dashlength = 0.4
@@ -163,7 +165,9 @@ func _on_animated_sprite_2d_animation_finished():
 
 func _on_hitbox_area_entered(area: Area2D):
 	if area.get_parent().is_in_group("enemies") and area.get_groups().size() > 0:
-		var enemyDamage = area.get_groups()[0]
-		game_controller.player_health -= game_controller.enemies_damage[enemyDamage]
+		var enemyDamage = game_controller.enemies_damage[area.get_groups()[0]]
+		if double_damage_taken:
+			enemyDamage *=2
+		game_controller.player_health -= enemyDamage
 		game_controller.get_camera().shake_camera(3, 0.3)
-		popup(str(game_controller.enemies_damage[enemyDamage]))
+		popup(str(enemyDamage))

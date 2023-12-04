@@ -25,7 +25,6 @@ var damage = 10
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var _player: Player
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var _motion: Vector2
 var player_is_on_area = false
 var anterior_position
 var is_black_slime

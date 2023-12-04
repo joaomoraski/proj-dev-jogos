@@ -20,7 +20,6 @@ func _process(delta: float) -> void:
 		generate_enemies()
 	if enemies_total == 0:
 		spawn_enemies = false
-	pass
 
 #func calculate_monster_per_spawn() -> void:
 #	var total_temp = enemies_total

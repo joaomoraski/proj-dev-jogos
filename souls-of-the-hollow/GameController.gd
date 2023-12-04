@@ -26,6 +26,8 @@ var enemies_damage = {
 	"BlackSlime": 17,
 	"skeletonAttack": 25
 }
+
+var base_demon_sword_damage = 25
 # PRIVATE METHODS
 ############################################
 
@@ -51,6 +53,43 @@ func reset_player():
 	player_max_health = 100
 	_player.setup()
 
+func apply_player_effect(type: String):
+	if type == "Speed":
+		_player.normalSpeed *= 2 
+	if type == "DoubleDamage":
+		# Todo, verificar se esta com a espada
+		game_controller.player_damage *= 2
+	if type == "TripleDamageDoubleTaken":
+		game_controller.player_damage *= 3
+		_player.double_damage_taken = true
+	if type == "DemonSword":
+		# So perde quando morrer
+		_player.have_demon_sword = true
+		# Dano bonus base da demon sword vai ser 25
+		if times_finished:
+			var multiplier = 0.02 * times_finished
+			player_damage += (base_demon_sword_damage * multiplier)
+		else:
+			player_damage += base_demon_sword_damage
+
+
+func remove_player_effect(type: String):
+	if type == "Speed":
+		_player.normalSpeed = 150.0
+	if type == "DoubleDamage":
+		game_controller.player_damage = 25
+		# Todo, verificar se esta com a espada
+		if times_finished:
+			var multiplier = 0.02 * times_finished
+			game_controller.player_damage += (game_controller.player_damage * multiplier)
+	if type == "TripleDamageDoubleTaken":
+		game_controller.player_damage = 25
+		_player.double_damage_taken = false
+		# Todo, verificar se esta com a espada
+		if times_finished:
+			var multiplier = 0.02 * times_finished
+			game_controller.player_damage += (game_controller.player_damage * multiplier)
+	
 func setup_enemy_damage(enemy, damage):
 	enemies_damage[enemy] = damage
 

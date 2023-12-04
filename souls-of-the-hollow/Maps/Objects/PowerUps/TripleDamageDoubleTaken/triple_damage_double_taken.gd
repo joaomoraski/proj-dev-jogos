@@ -1,4 +1,4 @@
-class_name Speed
+class_name TripleDAmageDoubleTaken
 extends RigidBody2D
 
 @onready var powerup = $PowerUpsTimes
@@ -14,7 +14,7 @@ func _input(event):
 		if $Area2D.get_overlapping_bodies().size() > 1 and verify_player():
 			$Area2D.monitoring = false
 			visible = false
-			await game_controller.apply_player_effect("Speed")
-			powerup.start_powerup_timer(5, "Speed")
+			await game_controller.apply_player_effect("TripleDamageDoubleTaken")
+			powerup.start_powerup_timer(5, "TripleDamageDoubleTaken")
 			await get_tree().create_timer(5).timeout
 			queue_free()

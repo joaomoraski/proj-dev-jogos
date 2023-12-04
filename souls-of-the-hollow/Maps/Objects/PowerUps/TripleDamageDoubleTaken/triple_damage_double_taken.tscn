@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bcuiqi2e4eii1"]
+
+[ext_resource type="Texture2D" uid="uid://crjtfg70gfg3h" path="res://Maps/Objects/PowerUps/TripleDamageDoubleTaken/TripleDamageDoubleTaken.png" id="1_4ebqu"]
+[ext_resource type="Script" path="res://Maps/Objects/PowerUps/TripleDamageDoubleTaken/triple_damage_double_taken.gd" id="1_7o24s"]
+[ext_resource type="PackedScene" uid="uid://si8rllikwbkx" path="res://Maps/Objects/PowerUps/power_ups_times.tscn" id="2_qy30c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jecm5"]
+radius = 8.06226
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bi3bp"]
+radius = 20.025
+
+[node name="TripleDamageDoubleTaken" type="RigidBody2D"]
+collision_layer = 524288
+collision_mask = 524288
+script = ExtResource("1_7o24s")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_4ebqu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jecm5")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_bi3bp")
+
+[node name="PowerUpsTimes" parent="." instance=ExtResource("2_qy30c")]

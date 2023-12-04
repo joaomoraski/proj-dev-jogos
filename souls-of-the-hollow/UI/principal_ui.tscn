@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://fysa5u35ksds"]
+[gd_scene load_steps=11 format=3 uid="uid://fysa5u35ksds"]
 
 [ext_resource type="PackedScene" uid="uid://dxfmjk3a1rfvo" path="res://UI/MobileInput/Joystick.tscn" id="1_gfeuy"]
 [ext_resource type="PackedScene" uid="uid://d00gvi7bt2pgc" path="res://UI/MobileInput/ButtonAttack/button_attack.tscn" id="2_i27l5"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://ButtonFullscreen.gd" id="7_voqpb"]
 [ext_resource type="Texture2D" uid="uid://dx2ttomv2wi7e" path="res://Player/PersonagemPrincipalCabeca.png" id="8_y5h0r"]
 [ext_resource type="Texture2D" uid="uid://b4rnfl3irsv2q" path="res://UI/CoinsIcon.png" id="9_4wfuk"]
-[ext_resource type="Script" path="res://UI/ProgressBar.gd" id="10_3ecej"]
 [ext_resource type="Script" path="res://UI/CoinText.gd" id="10_caq43"]
 
 [node name="PrincipalUI" type="CanvasLayer"]
@@ -82,6 +81,15 @@ offset_left = 71.0
 offset_top = 3.0
 offset_right = 673.0
 offset_bottom = 30.0
-script = ExtResource("10_3ecej")
+
+[node name="Powerups" type="Node2D" parent="."]
+
+[node name="Sword" type="Sprite2D" parent="Powerups"]
+
+[node name="Speed" type="Sprite2D" parent="Powerups"]
+
+[node name="DoubleDamage" type="Sprite2D" parent="Powerups"]
+
+[node name="TripleDamageDoubleTaken" type="Sprite2D" parent="Powerups"]
 
 [connection signal="pressed" from="ButtonFullscreen" to="ButtonFullscreen" method="_on_pressed"]
