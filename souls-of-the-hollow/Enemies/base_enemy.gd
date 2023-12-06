@@ -52,9 +52,9 @@ func _physics_process(delta):
 		invert_moving()
 	anterior_position = position
 	attack_logic(delta)
-	if _can_move and CurrentState == EnemyStates.HURT:
+	if _can_move and (CurrentState == EnemyStates.HURT or not $Hitbox.monitoring):
 		CurrentState = EnemyStates.MOVE
-		$Hitbox.monitoring = true
+		$Hitbox.set_deferred("monitoring", true)
 	# Adiciona a gravidade ao jogo
 	velocity.y += gravity * delta
 	if CurrentState == EnemyStates.MOVE:
@@ -148,6 +148,7 @@ func _on_hitbox_area_entered(area):
 		CurrentState = EnemyStates.HURT
 		$Hitbox.set_deferred("monitoring", false)
 		cooldown_timer = cooldown_time
+		velocity.x = 0
 		health -= game_controller.player_damage
 		game_controller.get_camera().shake_camera(3, 0.3)
 		popup(str(game_controller.player_damage))
