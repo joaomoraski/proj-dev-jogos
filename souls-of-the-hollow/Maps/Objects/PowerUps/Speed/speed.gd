@@ -11,8 +11,8 @@ func verify_player() -> bool:
 
 func _input(event):
 	if event.is_action_pressed("interact"):
-		if $Area2D.get_overlapping_bodies().size() > 1 and verify_player():
-			$Area2D.monitoring = false
+		if $Area2D.monitoring and $Area2D.get_overlapping_bodies().size() > 1 and verify_player():
+			$Area2D.set_deferred("monitoring", false)
 			visible = false
 			await game_controller.apply_player_effect("Speed")
 			powerup.start_powerup_timer(5, "Speed")

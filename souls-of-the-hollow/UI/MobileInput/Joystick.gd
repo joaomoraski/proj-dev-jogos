@@ -86,6 +86,8 @@ func _get_stick_movement(event: InputEvent) -> void:
 	
 
 func _input(event: InputEvent) -> void:
+	if not OS.has_feature("mobile"):
+		return
 	# when the first touch is made, we store the index
 	if event is InputEventScreenTouch and _inside_joystick(event.position) and _touch_id == -1:
 		_touch_id = event.index				

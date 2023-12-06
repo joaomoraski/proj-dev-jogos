@@ -3,6 +3,10 @@ extends Button
 
 var _is_full_screen: bool = false
 
+func _ready() -> void:
+	if OS.has_feature("mobile"):
+		visible = false
+
 func _toggle_fullscreen() -> void:
 	_is_full_screen = not _is_full_screen
 	if _is_full_screen:

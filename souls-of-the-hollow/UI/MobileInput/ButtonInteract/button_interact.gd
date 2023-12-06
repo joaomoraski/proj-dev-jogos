@@ -1,7 +1,7 @@
-class_name ButtonDodge
+class_name ButtonInteract
 extends Node2D
 
-@export var button_action: String = "dash"
+@export var button_action: String = "interact"
 
 func _new_input(action: String, pressed: bool) -> void:
 	if not OS.has_feature("mobile"):
@@ -15,5 +15,4 @@ func _on_TouchScreenButton_pressed() -> void:
 	_new_input(button_action, true)
 
 func _on_TouchScreenButton_released() -> void:
-	# Precisa tirar o acesso ao botão enquanto inventário estiver aberto
 	_new_input(button_action, false)

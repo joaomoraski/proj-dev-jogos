@@ -1,10 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://fysa5u35ksds"]
+[gd_scene load_steps=14 format=3 uid="uid://fysa5u35ksds"]
 
+[ext_resource type="Script" path="res://UI/MobileInputs.gd" id="1_4ek83"]
 [ext_resource type="PackedScene" uid="uid://dxfmjk3a1rfvo" path="res://UI/MobileInput/Joystick.tscn" id="1_gfeuy"]
 [ext_resource type="PackedScene" uid="uid://d00gvi7bt2pgc" path="res://UI/MobileInput/ButtonAttack/button_attack.tscn" id="2_i27l5"]
 [ext_resource type="PackedScene" uid="uid://b2bap0ep06arb" path="res://UI/MobileInput/ButtonDodge/button_dodge.tscn" id="3_8n3c2"]
 [ext_resource type="PackedScene" uid="uid://cb1gwekpgb0gg" path="res://UI/MobileInput/ButtonJump/button_jump.tscn" id="4_kki5q"]
+[ext_resource type="PackedScene" uid="uid://pv8lppxs5fbm" path="res://UI/MobileInput/ButtonInteract/button_interact.tscn" id="5_awx7l"]
 [ext_resource type="Script" path="res://Player/LabelVida.gd" id="5_yfr53"]
+[ext_resource type="PackedScene" uid="uid://bvpfvhivjsu2p" path="res://UI/MobileInput/ButtonShield/button_shield.tscn" id="6_q5cxk"]
 [ext_resource type="Script" path="res://LabelFPS.gd" id="6_qff6e"]
 [ext_resource type="Script" path="res://ButtonFullscreen.gd" id="7_voqpb"]
 [ext_resource type="Texture2D" uid="uid://dx2ttomv2wi7e" path="res://Player/PersonagemPrincipalCabeca.png" id="8_y5h0r"]
@@ -14,6 +17,8 @@
 [node name="PrincipalUI" type="CanvasLayer"]
 
 [node name="MobileInputs" type="Node2D" parent="."]
+visible = false
+script = ExtResource("1_4ek83")
 
 [node name="JoystickBase" parent="MobileInputs" instance=ExtResource("1_gfeuy")]
 position = Vector2(1, 448)
@@ -21,15 +26,24 @@ position = Vector2(1, 448)
 [node name="Buttons" type="Node2D" parent="MobileInputs"]
 
 [node name="ButtonAttack" parent="MobileInputs/Buttons" instance=ExtResource("2_i27l5")]
-position = Vector2(935, 586)
+position = Vector2(954, 586)
+scale = Vector2(1.5, 1.5)
+
+[node name="ButtonShield" parent="MobileInputs/Buttons" instance=ExtResource("6_q5cxk")]
+position = Vector2(1010, 586)
+scale = Vector2(1.5, 1.5)
+
+[node name="ButtonInteract" parent="MobileInputs/Buttons" instance=ExtResource("5_awx7l")]
+position = Vector2(903, 518)
 scale = Vector2(1.5, 1.5)
 
 [node name="ButtonDodge" parent="MobileInputs/Buttons" instance=ExtResource("3_8n3c2")]
-position = Vector2(995, 586)
+position = Vector2(1007, 518)
 scale = Vector2(1.5, 1.5)
+button_action = "dash"
 
 [node name="ButtonJump" parent="MobileInputs/Buttons" instance=ExtResource("4_kki5q")]
-position = Vector2(1053, 586)
+position = Vector2(1070, 518)
 scale = Vector2(1.5, 1.5)
 
 [node name="LabelVida" type="Label" parent="."]
@@ -42,19 +56,19 @@ text = "/ Vida máxima: 100
 "
 script = ExtResource("5_yfr53")
 
-[node name="LabelFPS" type="Label" parent="."]
-visible = false
-offset_left = 6.0
-offset_top = 71.0
-offset_right = 61.0
-offset_bottom = 97.0
-text = "FPS: 60"
+[node name="LabelFPSTimesFinished" type="Label" parent="."]
+offset_left = 2.0
+offset_top = 100.0
+offset_right = 57.0
+offset_bottom = 126.0
+text = "FPS: 60 | Times: 0"
 script = ExtResource("6_qff6e")
 
 [node name="ButtonFullscreen" type="Button" parent="."]
-visible = false
-offset_right = 120.0
-offset_bottom = 31.0
+offset_left = 1.0
+offset_top = 69.0
+offset_right = 121.0
+offset_bottom = 100.0
 text = "Fullscreen [F4]"
 script = ExtResource("7_voqpb")
 
@@ -91,5 +105,13 @@ offset_bottom = 30.0
 [node name="DoubleDamage" type="Sprite2D" parent="Powerups"]
 
 [node name="TripleDamageDoubleTaken" type="Sprite2D" parent="Powerups"]
+
+[node name="QueMerdaEuToFazendo" type="Label" parent="."]
+offset_left = 1.0
+offset_top = 121.0
+offset_right = 368.0
+offset_bottom = 147.0
+text = "Que merda eu to fazendo?
+Atualmente: adicionando os botoes pro mobile"
 
 [connection signal="pressed" from="ButtonFullscreen" to="ButtonFullscreen" method="_on_pressed"]

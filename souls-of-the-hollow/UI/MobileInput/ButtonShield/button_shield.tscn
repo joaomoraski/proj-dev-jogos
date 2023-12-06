@@ -1,15 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://bvpfvhivjsu2p"]
 
-[ext_resource type="Script" path="res://UI/MobileInput/ButtonAttack/button_attack.gd" id="1_ydbw6"]
-[ext_resource type="Texture2D" uid="uid://bjglsy3ewuln" path="res://UI/MobileInput/Textures/button_a_normal.png" id="2_7a5y3"]
-[ext_resource type="Texture2D" uid="uid://mj0i3tgqt062" path="res://UI/MobileInput/Textures/button_a_pressed.png" id="3_mx0bu"]
+[ext_resource type="Script" path="res://UI/MobileInput/ButtonShield/button_shield.gd" id="1_cdl16"]
+[ext_resource type="Texture2D" uid="uid://b262mpors8iv0" path="res://UI/MobileInput/ButtonShield/ButtonShield-Normal.png" id="2_fyr42"]
+[ext_resource type="Texture2D" uid="uid://bm2p0r8hegqol" path="res://UI/MobileInput/ButtonShield/ButtonShield-Pressed.png" id="3_1ai1a"]
 
-[node name="ButtonAttack" type="Node2D"]
-script = ExtResource("1_ydbw6")
+[node name="ButtonShield" type="Node2D"]
+script = ExtResource("1_cdl16")
 
-[node name="ButtonAttack" type="TouchScreenButton" parent="."]
-texture_normal = ExtResource("2_7a5y3")
-texture_pressed = ExtResource("3_mx0bu")
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+texture_normal = ExtResource("2_fyr42")
+texture_pressed = ExtResource("3_1ai1a")
 
-[connection signal="pressed" from="ButtonAttack" to="." method="_on_TouchScreenButton_pressed"]
-[connection signal="released" from="ButtonAttack" to="." method="_on_TouchScreenButton_released"]
+[connection signal="pressed" from="TouchScreenButton" to="." method="_on_TouchScreenButton_pressed"]
+[connection signal="released" from="TouchScreenButton" to="." method="_on_TouchScreenButton_released"]

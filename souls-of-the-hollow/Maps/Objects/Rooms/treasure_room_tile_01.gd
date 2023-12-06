@@ -6,6 +6,7 @@ extends Node2D
 var spawn_enemies: bool = false;
 @export var enemies_total = 12
 var enemies_on_screen = 0
+var all_enemies_die: bool = false
 #var monster_per_spawn = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -18,8 +19,14 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if spawn_enemies:
 		generate_enemies()
-	if enemies_total == 0:
+	if all_enemies_die:
 		spawn_enemies = false
+		for i in range(1,5):
+			$WallAndDoors.set_layer_enabled(i, false)
+		if not $WallAndDoors.is_layer_enabled(5):
+			$WallAndDoors.set_layer_enabled(5, true)
+		
+		
 
 #func calculate_monster_per_spawn() -> void:
 #	var total_temp = enemies_total
@@ -34,15 +41,14 @@ func _process(_delta: float) -> void:
 #			monster_per_spawn[i] = total_temp/3
 
 func generate_enemies() -> void:
-	if enemies_on_screen >= 3:
-		return
+	if enemies_on_screen >= 3 or enemies_total <= 0: return
 	var enemy = enemy_scene.instantiate()
 	enemy.position = get_random_spawner_position()
 	enemy.is_from_spawner = true
 	enemy.die_on_spawner.connect(on_enemy_die)	
 	add_child(enemy)
 	enemies_on_screen+=1
-	enemies_total-=1
+	enemies_total-=1	
 	await get_tree().create_timer(1).timeout
 	
 	
@@ -72,3 +78,5 @@ func _on_door_body_entered(body: Node2D) -> void:
 
 func on_enemy_die():
 	enemies_on_screen-=1
+	if enemies_total <= 0 and enemies_on_screen <= 0:
+		all_enemies_die = true

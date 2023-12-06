@@ -7,7 +7,7 @@
 size = Vector2(32, 47)
 
 [node name="ExitDoor" type="Area2D"]
-position = Vector2(1215, 108)
+position = Vector2(1219, 153)
 script = ExtResource("1_inxw5")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -75,6 +75,7 @@ func _physics_process(delta):
 	# Adiciona a gravidade ao jogo
 	velocity.y += gravity * delta
 	
+	
 	if Input.is_action_just_pressed("dash"):
 		dash_collision_logic(false)
 		CurrentState = PlayerStates.DASH
@@ -183,6 +184,7 @@ func _on_animated_sprite_2d_animation_finished():
 func _on_hitbox_area_entered(area: Area2D):
 	if area.get_parent().is_in_group("enemies") and area.get_groups().size() > 0:
 		if parry: 
+			game_controller.get_camera().shake_camera(3, 0.3)
 			$AnimationTela.play("Parry")
 			return
 		var enemyDamage = game_controller.enemies_damage[area.get_groups()[0]]
