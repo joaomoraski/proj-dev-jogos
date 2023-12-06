@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://0tbd11f8e28c"]
+
+[ext_resource type="Script" path="res://Enemies/base_enemy.gd" id="1_lnpci"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ujf4g"]
+size = Vector2(14, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p3s78"]
+size = Vector2(14.5, 9)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xtqkd"]
+radius = 32.0156
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oc0wq"]
+size = Vector2(12, 12)
+
+[node name="BaseEnemy" type="CharacterBody2D"]
+script = ExtResource("1_lnpci")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_ujf4g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 9
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-0.25, 12)
+shape = SubResource("RectangleShape2D_p3s78")
+debug_color = Color(0.956863, 0, 0.533333, 0.419608)
+
+[node name="VisionBox" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionBox" groups=["enemies"]]
+shape = SubResource("CircleShape2D_xtqkd")
+
+[node name="AttackBox" type="Area2D" parent="." groups=["Slime"]]
+position = Vector2(0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackBox"]
+position = Vector2(13, 10)
+shape = SubResource("RectangleShape2D_oc0wq")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(11, -19)
+target_position = Vector2(0, 35.155)
+collision_mask = 128

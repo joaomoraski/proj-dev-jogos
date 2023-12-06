@@ -15,7 +15,7 @@ func _ready() -> void:
 #	calculate_monster_per_spawn()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if spawn_enemies:
 		generate_enemies()
 	if enemies_total == 0:
@@ -36,7 +36,7 @@ func _process(delta: float) -> void:
 func generate_enemies() -> void:
 	if enemies_on_screen >= 3:
 		return
-	var enemy = await enemy_scene.instantiate()
+	var enemy = enemy_scene.instantiate()
 	enemy.position = get_random_spawner_position()
 	enemy.is_from_spawner = true
 	enemy.die_on_spawner.connect(on_enemy_die)	

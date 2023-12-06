@@ -22,9 +22,8 @@ func _process(_delta: float) -> void:
 func _stop_shaking() -> void:
 	_shaking = false
 
-func shake_camera(range: float, duration: float) -> void:
+func shake_camera(distance: float, duration: float) -> void:
 	_shaking = true
-	_shake_range = range
-
+	_shake_range = distance
 	_timer.set_wait_time(duration)
 	_timer.start()

@@ -10,12 +10,15 @@ var CurrentState = PlayerStates.MOVE # Estado atual do personagem
 var normalSpeed = 150.0
 @export var SPEED = 150.0
 const JUMP_VELOCITY = -400.0
-var _direction: float = 0.1
+var _direction: float = 0.0
 var _double_jump: bool = false
 var isAttacking: bool = false
 var invertAttackCollision: int = -32
 var double_damage_taken: bool = false
 var have_demon_sword: bool = false
+var in_defense: bool = false
+var parry: bool = false
+var flipped: bool = false
 
 const dashspeed = 300.0
 const dashlength = 0.4
@@ -33,6 +36,9 @@ func _ready():
 	setup()
 	
 func setup():
+	$PlayerHitBox/CollisionShape2D.disabled = false
+	scale.x = 1
+	_direction = 0.1
 	var times = game_controller.times_finished
 	if times:
 		var multiplier = 0.02 * times
@@ -45,12 +51,12 @@ func set_player_health_bar(player_health_bar: ProgressBar):
 	_player_health_bar = player_health_bar
 
 func popup(message: String):
-	var damage = damage_node.instantiate()
-	damage.get_child(0).text = message
-	damage.position = global_position
+	var instantiate_damage = damage_node.instantiate()
+	instantiate_damage.get_child(0).text = message
+	instantiate_damage.position = global_position
 	var tween = get_tree().create_tween()
-	tween.tween_property(damage, "position", global_position + _get_direction(), 0.75)
-	get_tree().current_scene.add_child(damage)
+	tween.tween_property(instantiate_damage, "position", global_position + _get_direction(), 0.75)
+	get_tree().current_scene.add_child(instantiate_damage)
 
 func _get_direction():
 	return Vector2(randf_range(-1, 1), -randf()) * 16
@@ -88,6 +94,11 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("easy"):
 		game_controller.times_finished -= 1
 		
+	if Input.is_action_pressed("defense") and not isAttacking:
+		in_defense = true
+	elif Input.is_action_just_released("defense"):
+		in_defense = false
+	
 	if game_controller.player_health <= 0:
 		Die()
 		return
@@ -100,28 +111,33 @@ func _physics_process(delta):
 # cima -1
 func animatePlayer():
 	if CurrentState == PlayerStates.MOVE:
-		if not isAttacking:
+		if not isAttacking and not in_defense:
 			if is_on_floor():
 				if velocity.x == 0.0:
-					$AnimatedSprite2D.play("Idle")
+					$AnimationPlayer.play("Idle")
 				elif not dash.is_dashing():
-					$AnimatedSprite2D.play("Walk")
+					$AnimationPlayer.play("Walk")
 			else:
 				if velocity.y < 0 or _double_jump and not dash.is_dashing():
-					$AnimatedSprite2D.play("Jump")
+					$AnimationPlayer.play("Jump")
 				if velocity.y > 10 and not dash.is_dashing():
-					$AnimatedSprite2D.play("Fall")
+					$AnimationPlayer.play("Fall")
+		elif is_on_floor() and in_defense:
+			$AnimationPlayer.play("Defense")
 		else:
-			$AnimatedSprite2D.play("Attack")
+			$AnimationPlayer.play("Attack")
 	if CurrentState == PlayerStates.DASH and dash.is_dashing():
-		$AnimatedSprite2D.play("Dash")
+		$AnimationPlayer.play("Dash")
 	
-	$AnimatedSprite2D.flip_h = false if _direction > 0.0 else true
-	$AttackCollision/CollisionShape2D.position = Vector2(0,2) if _direction > 0 else Vector2(invertAttackCollision,2)
+	if _direction > 0.0 and flipped:
+		scale.x = -scale.x
+		flipped = false
+	elif _direction < 0.0 and not flipped:
+		scale.x = -scale.x
+		flipped = true
 	
 func CheckAndExecuteAttack():
-	if Input.is_action_just_pressed("Attack") and not CurrentState == PlayerStates.DASH:
-		$AttackCollision/CollisionShape2D.disabled = false
+	if Input.is_action_pressed("Attack") and not CurrentState == PlayerStates.DASH:
 		isAttacking = true
 
 func CheckAndExecuteJump():
@@ -147,27 +163,36 @@ func Move():
 	CheckAndExecuteAttack()
 
 func Die():
-	$AnimatedSprite2D.play("Die")
-	$PlayerHitBox/CollisionShape2D.disabled = true
-	await $AnimatedSprite2D.animation_finished
+	$AnimationPlayer.play("Die")
+
+func restart_game():
 	game_controller.actual_stage=1
 	game_controller.change_stage(load("res://Maps/01/map_01.tscn"))
 	game_controller.reset_player()
-	$PlayerHitBox/CollisionShape2D.disabled = false
 
 func onStateFinish():
 	CurrentState = PlayerStates.MOVE
 
+func _on_finished_attack_animation():
+	isAttacking = false
+
 func _on_animated_sprite_2d_animation_finished():
-	if $AnimatedSprite2D.animation == "Attack":
-		$AttackCollision/CollisionShape2D.disabled = true
-		isAttacking = false
+	$AttackCollision/CollisionShape2D.disabled = true
+	isAttacking = false
 
 func _on_hitbox_area_entered(area: Area2D):
 	if area.get_parent().is_in_group("enemies") and area.get_groups().size() > 0:
+		if parry: 
+			$AnimationTela.play("Parry")
+			return
 		var enemyDamage = game_controller.enemies_damage[area.get_groups()[0]]
+		if in_defense:
+			enemyDamage/=2
 		if double_damage_taken:
 			enemyDamage *=2
 		game_controller.player_health -= enemyDamage
 		game_controller.get_camera().shake_camera(3, 0.3)
 		popup(str(enemyDamage))
+
+func _parry():
+	parry = !parry

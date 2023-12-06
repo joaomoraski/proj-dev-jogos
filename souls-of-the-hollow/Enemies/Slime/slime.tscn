@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bl2fdhp0vbrhc"]
+[gd_scene load_steps=14 format=3 uid="uid://bl2fdhp0vbrhc"]
 
 [ext_resource type="Script" path="res://Enemies/Slime/slime.gd" id="1_dgs50"]
 [ext_resource type="Texture2D" uid="uid://bbbt8w1j0gv77" path="res://Enemies/Slime/DemonSlime.png" id="1_ecg2e"]
@@ -205,12 +205,54 @@ tracks/3/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_dhvcx"]
+resource_name = "Walk"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackBox:monitorable")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sdjs7"]
 _data = {
 "Attack": SubResource("Animation_2lmfm"),
 "Dead": SubResource("Animation_c7klr"),
 "Idle": SubResource("Animation_xjpv4"),
-"RESET": SubResource("Animation_5wjya")
+"RESET": SubResource("Animation_5wjya"),
+"Walk": SubResource("Animation_dhvcx")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_li502"]
