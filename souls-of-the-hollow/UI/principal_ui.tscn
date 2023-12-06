@@ -17,7 +17,6 @@
 [node name="PrincipalUI" type="CanvasLayer"]
 
 [node name="MobileInputs" type="Node2D" parent="."]
-visible = false
 script = ExtResource("1_4ek83")
 
 [node name="JoystickBase" parent="MobileInputs" instance=ExtResource("1_gfeuy")]

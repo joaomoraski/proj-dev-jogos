@@ -14,7 +14,7 @@ script = ExtResource("1_o6rfp")
 
 [node name="Player" parent="." groups=["damageIndicator"] instance=ExtResource("1_lsfwl")]
 z_index = 10
-position = Vector2(65, 81)
+position = Vector2(371, 14)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 z_index = 20
