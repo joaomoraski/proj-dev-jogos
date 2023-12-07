@@ -27,7 +27,7 @@ var _player: Player
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var player_is_on_area = false
 var anterior_position
-var enemy_name
+var enemy_attack_name
 
 func _ready():
 	$AnimationPlayer.play("Idle")
@@ -44,7 +44,7 @@ func setup():
 	if times:
 		health += BASE_HEALTH * multiplier
 		damage += BASE_DAMAGE * multiplier
-		game_controller.setup_enemy_damage(enemy_name, damage)
+		game_controller.setup_enemy_damage(enemy_attack_name, damage)
 
 func _physics_process(delta):
 	# Logica para ele nao ficar preso na mesma posição caso algo o trave

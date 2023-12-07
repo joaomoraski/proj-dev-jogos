@@ -39,6 +39,7 @@ func _process(delta):
 			STARTBUTTON:
 				get_tree().change_scene_to_file("res://world.tscn")
 			INSTRUCTIONBUTTON:
+				get_tree().get_root().add_child(load("res://TitleScreen/Instructions/instructions.tscn").instantiate())
 				print("Instructions button")
 			CREDITSBUTTON:
 				print("Credits button")
@@ -52,7 +53,9 @@ func change_button_color():
 		buttons_index_color[past_option].color = Color(1,1,1,1)
 	
 func _on_start_touch_screen_pressed():
-	pass # Replace with function body.
+	buttons_index_color[STARTBUTTON].color = selected_color
+	get_tree().change_scene_to_file("res://world.tscn")
+	
 
 func _on_instruction_touch_screen_pressed():
 	pass # Replace with function body.
@@ -61,4 +64,6 @@ func _on_credits_touch_screen_pressed():
 	pass # Replace with function body.
 
 func _on_exit_game_touch_screen_pressed():
-	pass # Replace with function body.
+	buttons_index_color[EXITBUTTON].color = selected_color
+	get_tree().quit()
+	

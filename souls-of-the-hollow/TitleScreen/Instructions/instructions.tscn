@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://1m0bn3hrjwe0"]
+
+[ext_resource type="Script" path="res://TitleScreen/Instructions/instructions.gd" id="1_x4ewj"]
+[ext_resource type="Texture2D" uid="uid://ba3oowpbfc84f" path="res://Maps/Background/FirstMap/bg1.png" id="2_a3x5w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n6uvy"]
+size = Vector2(90, 35)
+
+[node name="Instructions" type="Node2D"]
+script = ExtResource("1_x4ewj")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(599, 327)
+scale = Vector2(3.97396, 3.46759)
+texture = ExtResource("2_a3x5w")
+flip_v = true
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+text = "<- Voltar"
+uppercase = true
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Label"]
+position = Vector2(43, 12)
+shape = SubResource("RectangleShape2D_n6uvy")
+
+[connection signal="pressed" from="Label/TouchScreenButton" to="." method="_on_touch_screen_button_pressed"]

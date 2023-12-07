@@ -7,7 +7,7 @@ func _ready():
 	BASE_DAMAGE = 10
 	health = BASE_HEALTH
 	damage = BASE_DAMAGE
-	enemy_name = "Slime"
+	enemy_attack_name = "Slime"
 	$AnimationPlayer.play("Idle")
 	randomize()
 	setup()
