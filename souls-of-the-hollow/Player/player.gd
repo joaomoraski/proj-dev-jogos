@@ -17,6 +17,7 @@ var invertAttackCollision: int = -32
 var double_damage_taken: bool = false
 var have_demon_sword: bool = false
 var in_defense: bool = false
+var recent_defense: bool = false
 var parry: bool = false
 var flipped: bool = false
 
@@ -95,7 +96,13 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("easy"):
 		game_controller.times_finished -= 1
 		
-	if Input.is_action_pressed("defense") and not isAttacking:
+		
+	if Input.is_action_just_pressed("defense") and not isAttacking:
+		parry = true
+		in_defense = true
+		await get_tree().create_timer(0.1).timeout
+		parry = false
+	elif Input.is_action_pressed("defense") and not isAttacking:
 		in_defense = true
 	elif Input.is_action_just_released("defense"):
 		in_defense = false
@@ -183,7 +190,7 @@ func _on_animated_sprite_2d_animation_finished():
 
 func _on_hitbox_area_entered(area: Area2D):
 	if area.get_parent().is_in_group("enemies") and area.get_groups().size() > 0:
-		if parry: 
+		if parry:
 			game_controller.get_camera().shake_camera(3, 0.3)
 			$AnimationTela.play("Parry")
 			return
@@ -198,3 +205,6 @@ func _on_hitbox_area_entered(area: Area2D):
 
 func _parry():
 	parry = !parry
+	if recent_defense:
+		recent_defense = false
+		
