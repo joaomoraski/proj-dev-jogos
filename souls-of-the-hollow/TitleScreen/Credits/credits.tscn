@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxxlolhm6fwi6"]
+
+[ext_resource type="Script" path="res://TitleScreen/Credits/credits.gd" id="1_68pqc"]
+[ext_resource type="Texture2D" uid="uid://ba3oowpbfc84f" path="res://Maps/Background/FirstMap/bg1.png" id="1_irrcg"]
+[ext_resource type="Texture2D" uid="uid://bogmmfj4m2ad" path="res://TitleScreen/Credits/madrugada codando.png" id="2_f38g4"]
+[ext_resource type="Script" path="res://ButtonFullscreen.gd" id="4_vqdwt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fiqx"]
+size = Vector2(120, 35)
+
+[node name="Credits" type="Node2D"]
+script = ExtResource("1_68pqc")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(599, 327)
+scale = Vector2(3.97396, 3.46759)
+texture = ExtResource("1_irrcg")
+flip_v = true
+
+[node name="MadrugadaCodando" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(234, 188)
+scale = Vector2(0.56993, 0.56993)
+texture = ExtResource("2_f38g4")
+
+[node name="Label3" type="Label" parent="."]
+modulate = Color(1, 1, 0, 1)
+offset_top = 1.0
+offset_right = 114.0
+offset_bottom = 27.0
+text = "<- Voltar/Esc"
+uppercase = true
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="Label3"]
+position = Vector2(60, 15)
+shape = SubResource("RectangleShape2D_4fiqx")
+
+[node name="Agradecimentos" type="Label" parent="."]
+offset_left = 457.0
+offset_top = 75.0
+offset_right = 1138.0
+offset_bottom = 153.0
+text = "Muito obrigado por jogar o Souls Of The Hollow.
+Ele foi criado como um trabalho avaliativo na matéria de Desenvolvimento de Jogos.
+Espero que goste!
+Talvez essa tela tenha algum easter egg, tenta apertar uns botões ai, boa sorte."
+
+[node name="ArteECodigo" type="Label" parent="."]
+offset_left = 35.0
+offset_top = 350.0
+offset_right = 526.0
+offset_bottom = 402.0
+text = "Arte & Código:
+	João Vitor Moraski Lunkes"
+
+[node name="MusicasEEfeitos" type="Label" parent="."]
+offset_left = 34.0
+offset_top = 431.0
+offset_right = 474.0
+offset_bottom = 483.0
+text = "Músicas & Efeitos:
+	Moonlight Sonata 1st Movement - Ludwig van Beethoven
+"
+
+[node name="ButtonFullscreen" type="Button" parent="."]
+offset_left = 133.0
+offset_top = 1.0
+offset_right = 253.0
+offset_bottom = 32.0
+text = "Fullscreen [F4]"
+script = ExtResource("4_vqdwt")
+
+[connection signal="pressed" from="Label3/TouchScreenButton" to="." method="_on_touch_screen_button_pressed"]
+[connection signal="pressed" from="ButtonFullscreen" to="ButtonFullscreen" method="_on_pressed"]

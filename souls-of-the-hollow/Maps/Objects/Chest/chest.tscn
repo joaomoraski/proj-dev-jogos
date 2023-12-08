@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dfsvncdotj1qm"]
+[gd_scene load_steps=7 format=3 uid="uid://dfsvncdotj1qm"]
 
 [ext_resource type="Texture2D" uid="uid://5jqeqdhvntmc" path="res://Maps/Objects/Chest/Chest.png" id="1_5i7nm"]
 [ext_resource type="Script" path="res://Maps/Objects/Chest/chest.gd" id="1_i8krp"]
@@ -15,12 +15,9 @@ _data = {
 size = Vector2(30, 21)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0wo1v"]
-radius = 25.0
+radius = 20.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v5if5"]
-size = Vector2(122, 36)
-
-[node name="Chest" type="StaticBody2D"]
+[node name="Chest" type="RigidBody2D"]
 position = Vector2(0, -8)
 collision_layer = 524288
 collision_mask = 524288
@@ -44,10 +41,3 @@ shape = SubResource("RectangleShape2D_c41jf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OpenArea"]
 shape = SubResource("CircleShape2D_0wo1v")
-
-[node name="ItemDropsArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemDropsArea"]
-position = Vector2(0, -2)
-shape = SubResource("RectangleShape2D_v5if5")
-debug_color = Color(0.976471, 0, 0.415686, 0.419608)

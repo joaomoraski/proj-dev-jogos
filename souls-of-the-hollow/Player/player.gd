@@ -37,6 +37,7 @@ func _ready():
 	setup()
 	
 func setup():
+	have_demon_sword = false
 	$PlayerHitBox/CollisionShape2D.disabled = false
 	scale.x = 1
 	_direction = 0.1
@@ -202,6 +203,18 @@ func _on_hitbox_area_entered(area: Area2D):
 		game_controller.player_health -= enemyDamage
 		game_controller.get_camera().shake_camera(3, 0.3)
 		popup(str(enemyDamage))
+		if area.get_groups()[0] == "fireSkeletonAttack" or area.get_groups()[0] == "demonAttack":
+			popup("INCENDIADO!!")
+			burn_player()
+
+func burn_player():
+	var i = 0
+	while i <= 10:
+		game_controller.player_health -= 2
+		game_controller.get_camera().shake_camera(3, 0.3)
+		popup(str(2))
+		await get_tree().create_timer(2).timeout
+		i+=2
 
 func _parry():
 	parry = !parry

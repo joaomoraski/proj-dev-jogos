@@ -1,9 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://cqk314xfnw2vj"]
+[gd_scene load_steps=15 format=3 uid="uid://cqk314xfnw2vj"]
 
 [ext_resource type="Texture2D" uid="uid://ba3oowpbfc84f" path="res://Maps/Background/FirstMap/bg1.png" id="1_2jsnj"]
 [ext_resource type="Script" path="res://TitleScreen/title_screen.gd" id="1_dgcnp"]
 [ext_resource type="Texture2D" uid="uid://ci33lm44ctlad" path="res://TitleScreen/souls-of-the-hollow-title-sem-fundo.png" id="2_6g8vm"]
 [ext_resource type="Texture2D" uid="uid://daigbuci3ths" path="res://TitleScreen/logo_gamepad_80x80.png" id="3_vhlbo"]
+[ext_resource type="Script" path="res://ButtonFullscreen.gd" id="5_op7mq"]
+[ext_resource type="PackedScene" uid="uid://cqa0k3li33bdt" path="res://UI/MobileInput/mobile_inputs.tscn" id="6_mgv2j"]
 
 [sub_resource type="Animation" id="Animation_vgybu"]
 resource_name = "PiscaVermeio"
@@ -238,7 +240,18 @@ libraries = {
 offset_right = 40.0
 offset_bottom = 23.0
 
+[node name="ButtonFullscreen" type="Button" parent="."]
+offset_right = 120.0
+offset_bottom = 31.0
+text = "Fullscreen [F4]"
+script = ExtResource("5_op7mq")
+
+[node name="MobileInputs" parent="." instance=ExtResource("6_mgv2j")]
+visible = false
+z_index = 1000
+
 [connection signal="pressed" from="Buttons/StartGame/StartTouchScreen" to="." method="_on_start_touch_screen_pressed"]
 [connection signal="pressed" from="Buttons/Instructions/InstructionTouchScreen" to="." method="_on_instruction_touch_screen_pressed"]
 [connection signal="pressed" from="Buttons/Credits/CreditsTouchScreen" to="." method="_on_credits_touch_screen_pressed"]
 [connection signal="pressed" from="Buttons/ExitGame/ExitGameTouchScreen" to="." method="_on_exit_game_touch_screen_pressed"]
+[connection signal="pressed" from="ButtonFullscreen" to="ButtonFullscreen" method="_on_pressed"]

@@ -1,49 +1,54 @@
-[gd_scene load_steps=14 format=3 uid="uid://fysa5u35ksds"]
+[gd_scene load_steps=11 format=3 uid="uid://fysa5u35ksds"]
 
-[ext_resource type="Script" path="res://UI/MobileInputs.gd" id="1_4ek83"]
-[ext_resource type="PackedScene" uid="uid://dxfmjk3a1rfvo" path="res://UI/MobileInput/Joystick.tscn" id="1_gfeuy"]
-[ext_resource type="PackedScene" uid="uid://d00gvi7bt2pgc" path="res://UI/MobileInput/ButtonAttack/button_attack.tscn" id="2_i27l5"]
-[ext_resource type="PackedScene" uid="uid://b2bap0ep06arb" path="res://UI/MobileInput/ButtonDodge/button_dodge.tscn" id="3_8n3c2"]
-[ext_resource type="PackedScene" uid="uid://cb1gwekpgb0gg" path="res://UI/MobileInput/ButtonJump/button_jump.tscn" id="4_kki5q"]
-[ext_resource type="PackedScene" uid="uid://pv8lppxs5fbm" path="res://UI/MobileInput/ButtonInteract/button_interact.tscn" id="5_awx7l"]
+[ext_resource type="PackedScene" uid="uid://cqa0k3li33bdt" path="res://UI/MobileInput/mobile_inputs.tscn" id="1_w6y5v"]
 [ext_resource type="Script" path="res://Player/LabelVida.gd" id="5_yfr53"]
-[ext_resource type="PackedScene" uid="uid://bvpfvhivjsu2p" path="res://UI/MobileInput/ButtonShield/button_shield.tscn" id="6_q5cxk"]
+[ext_resource type="Texture2D" uid="uid://dx8cpyqklbxbc" path="res://Maps/Objects/Coin/coin.png" id="6_hp83u"]
 [ext_resource type="Script" path="res://LabelFPS.gd" id="6_qff6e"]
 [ext_resource type="Script" path="res://ButtonFullscreen.gd" id="7_voqpb"]
 [ext_resource type="Texture2D" uid="uid://dx2ttomv2wi7e" path="res://Player/PersonagemPrincipalCabeca.png" id="8_y5h0r"]
-[ext_resource type="Texture2D" uid="uid://b4rnfl3irsv2q" path="res://UI/CoinsIcon.png" id="9_4wfuk"]
 [ext_resource type="Script" path="res://UI/CoinText.gd" id="10_caq43"]
+
+[sub_resource type="Animation" id="Animation_o0n1q"]
+resource_name = "flip_coin"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Coins/Coins:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_hgu3n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Coins/Coins:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4dy6u"]
+_data = {
+"RESET": SubResource("Animation_hgu3n"),
+"flip_coin": SubResource("Animation_o0n1q")
+}
 
 [node name="PrincipalUI" type="CanvasLayer"]
 
-[node name="MobileInputs" type="Node2D" parent="."]
-script = ExtResource("1_4ek83")
-
-[node name="JoystickBase" parent="MobileInputs" instance=ExtResource("1_gfeuy")]
-position = Vector2(1, 448)
-
-[node name="Buttons" type="Node2D" parent="MobileInputs"]
-
-[node name="ButtonAttack" parent="MobileInputs/Buttons" instance=ExtResource("2_i27l5")]
-position = Vector2(954, 586)
-scale = Vector2(1.5, 1.5)
-
-[node name="ButtonShield" parent="MobileInputs/Buttons" instance=ExtResource("6_q5cxk")]
-position = Vector2(1010, 586)
-scale = Vector2(1.5, 1.5)
-
-[node name="ButtonInteract" parent="MobileInputs/Buttons" instance=ExtResource("5_awx7l")]
-position = Vector2(903, 518)
-scale = Vector2(1.5, 1.5)
-
-[node name="ButtonDodge" parent="MobileInputs/Buttons" instance=ExtResource("3_8n3c2")]
-position = Vector2(1007, 518)
-scale = Vector2(1.5, 1.5)
-button_action = "dash"
-
-[node name="ButtonJump" parent="MobileInputs/Buttons" instance=ExtResource("4_kki5q")]
-position = Vector2(1070, 518)
-scale = Vector2(1.5, 1.5)
+[node name="MobileInputs" parent="." instance=ExtResource("1_w6y5v")]
 
 [node name="LabelVida" type="Label" parent="."]
 modulate = Color(0, 0.803922, 0, 1)
@@ -76,18 +81,6 @@ position = Vector2(32, 32)
 scale = Vector2(2, 2)
 texture = ExtResource("8_y5h0r")
 
-[node name="Coins" type="Sprite2D" parent="."]
-position = Vector2(85, 52)
-texture = ExtResource("9_4wfuk")
-
-[node name="CoinText" type="Label" parent="Coins"]
-offset_left = 14.0
-offset_top = -12.0
-offset_right = 54.0
-offset_bottom = 14.0
-text = "00"
-script = ExtResource("10_caq43")
-
 [node name="ProgressBar" type="ProgressBar" parent="."]
 modulate = Color(0, 0.803922, 0, 1)
 offset_left = 71.0
@@ -112,5 +105,29 @@ offset_right = 368.0
 offset_bottom = 147.0
 text = "Que merda eu to fazendo?
 Atualmente: adicionando os botoes pro mobile"
+
+[node name="Coins" type="Node2D" parent="."]
+
+[node name="CoinText" type="Label" parent="Coins"]
+offset_left = 99.0
+offset_top = 40.0
+offset_right = 139.0
+offset_bottom = 66.0
+text = "00"
+script = ExtResource("10_caq43")
+
+[node name="Coins" type="Sprite2D" parent="Coins"]
+position = Vector2(85, 52)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_hp83u")
+hframes = 8
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Coins"]
+root_node = NodePath("../..")
+autoplay = "flip_coin"
+libraries = {
+"": SubResource("AnimationLibrary_4dy6u")
+}
 
 [connection signal="pressed" from="ButtonFullscreen" to="ButtonFullscreen" method="_on_pressed"]

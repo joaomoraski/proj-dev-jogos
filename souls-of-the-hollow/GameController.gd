@@ -24,7 +24,9 @@ var times_finished = 0
 var enemies_damage = {
 	"Slime": 10,
 	"BlackSlime": 17,
-	"skeletonAttack": 25
+	"skeletonAttack": 25,
+	"fireSkeletonAttack": 30,
+	"demonAttack": 40
 }
 
 var base_demon_sword_damage = 25
@@ -71,7 +73,12 @@ func apply_player_effect(type: String):
 			player_damage += (base_demon_sword_damage * multiplier)
 		else:
 			player_damage += base_demon_sword_damage
-
+	if type == "Health":
+		if player_health < player_max_health:
+			if player_health + 15 > player_max_health:
+				player_health = player_max_health
+			else:
+				player_health += 15
 
 func remove_player_effect(type: String):
 	if type == "Speed":

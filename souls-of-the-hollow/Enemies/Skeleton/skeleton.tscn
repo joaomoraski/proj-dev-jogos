@@ -4,9 +4,6 @@
 [ext_resource type="Script" path="res://Enemies/Skeleton/skeleton.gd" id="1_gsyls"]
 [ext_resource type="PackedScene" uid="uid://bwdkf3dk1c25m" path="res://UI/floating_numbers.tscn" id="2_oj27p"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fgsqb"]
-size = Vector2(10, 30)
-
 [sub_resource type="Animation" id="Animation_ghutq"]
 resource_name = "Attack"
 length = 1.5
@@ -264,6 +261,9 @@ _data = {
 "Walk": SubResource("Animation_087kn")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fgsqb"]
+size = Vector2(10, 30)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ofpdy"]
 size = Vector2(10, 30)
 
@@ -277,11 +277,6 @@ size = Vector2(12.5, 15)
 script = ExtResource("1_gsyls")
 damage_node = ExtResource("2_oj27p")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4)
-shape = SubResource("RectangleShape2D_fgsqb")
-debug_color = Color(0, 0, 0, 0.419608)
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("1_b8gxa")
@@ -293,6 +288,11 @@ frame = 1
 libraries = {
 "": SubResource("AnimationLibrary_r14r1")
 }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_fgsqb")
+debug_color = Color(0, 0, 0, 0.419608)
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_mask = 9

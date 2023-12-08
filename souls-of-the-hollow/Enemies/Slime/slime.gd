@@ -8,6 +8,7 @@ func _ready():
 	health = BASE_HEALTH
 	damage = BASE_DAMAGE
 	enemy_attack_name = "Slime"
+	enemy_name = "Slime"
 	$AnimationPlayer.play("Idle")
 	randomize()
 	setup()
@@ -28,3 +29,4 @@ func setup():
 		$AttackBox.add_to_group("BlackSlime")
 		$Sprite2D.modulate = Color(1, 0, 0, 1)
 		game_controller.setup_enemy_damage("BlackSlime", damage)
+		enemy_name = "BlackSlime"

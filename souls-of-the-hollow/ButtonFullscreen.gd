@@ -16,6 +16,8 @@ func _toggle_fullscreen() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if DisplayServer.window_get_mode() == 3 and not _is_full_screen:
+		_is_full_screen = true
 	if Input.is_action_just_pressed("fullscreen"):
 		_toggle_fullscreen();
 

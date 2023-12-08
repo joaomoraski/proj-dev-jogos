@@ -8,7 +8,7 @@
 radius = 8.06226
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bi3bp"]
-radius = 20.025
+radius = 20.0
 
 [node name="TripleDamageDoubleTaken" type="RigidBody2D"]
 collision_layer = 524288

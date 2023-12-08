@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbiurlmc1icqv"
-path="res://.godot/imported/HealthIcon.png-e1fbc211896471b1c1d52b8346f180f6.ctex"
+uid="uid://bow7y5f051tfb"
+path="res://.godot/imported/madrugada codando.png-00ef2395ecc3a441e208c22d2c79eb91.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/HealthIcon.png"
-dest_files=["res://.godot/imported/HealthIcon.png-e1fbc211896471b1c1d52b8346f180f6.ctex"]
+source_file="res://Enemies/FireSkeleton/madrugada codando.png"
+dest_files=["res://.godot/imported/madrugada codando.png-00ef2395ecc3a441e208c22d2c79eb91.ctex"]
 
 [params]
 

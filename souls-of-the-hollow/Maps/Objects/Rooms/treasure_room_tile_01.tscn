@@ -481,8 +481,8 @@ texture = ExtResource("1_0gwiu")
 scenes/2/scene = ExtResource("3_1yfr2")
 
 [sub_resource type="TileSet" id="TileSet_jn21f"]
-physics_layer_0/collision_layer = 129
-physics_layer_0/collision_mask = 129
+physics_layer_0/collision_layer = 524417
+physics_layer_0/collision_mask = 524417
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.705882, 0, 0.337255, 1)
@@ -552,7 +552,7 @@ layer_5/modulate = Color(1, 1, 1, 1)
 layer_5/y_sort_enabled = false
 layer_5/y_sort_origin = 0
 layer_5/z_index = 0
-layer_5/tile_data = PackedInt32Array(655373, 0, 3, 655374, 65536, 3, 655375, 65536, 3, 655376, 65536, 3, 655377, 65536, 3, 655378, 65536, 3, 655379, 131072, 3, 589840, 1, 131072)
+layer_5/tile_data = PackedInt32Array(393237, 1, 131072)
 
 [node name="Entries" type="Node2D" parent="."]
 

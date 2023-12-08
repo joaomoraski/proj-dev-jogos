@@ -3,6 +3,13 @@ extends CharacterBody2D
 
 @export var damage_node: PackedScene
 var coin_scene = preload("res://Maps/Objects/Coin/coin.tscn")
+var health_scene = preload("res://Maps/Objects/Health/health.tscn")
+enum {DOUBLEDAMAGE, SPEED, TRIPLEDAMAGEDOUBLETAKEN}
+var drops_scenes = {
+	DOUBLEDAMAGE: "res://Maps/Objects/PowerUps/DoubleDamage/double_damage.tscn",
+	SPEED: "res://Maps/Objects/PowerUps/Speed/speed.tscn",
+	TRIPLEDAMAGEDOUBLETAKEN: "res://Maps/Objects/PowerUps/TripleDamageDoubleTaken/triple_damage_double_taken.tscn"
+}
 # Finite state machine
 enum EnemyStates {MOVE, ATTACK, DEAD, HURT} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
 var CurrentState = EnemyStates.MOVE # Estado atual do inimigo
@@ -28,6 +35,14 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var player_is_on_area = false
 var anterior_position
 var enemy_attack_name
+var enemy_name
+var enemy_probability_levels = {
+	"Slime": 1,
+	"BlackSlime": 1.5,
+	"Skeleton": 2,
+	"FireSkeleton": 2.5,
+	"Demon": 3
+}
 
 func _ready():
 	$AnimationPlayer.play("Idle")
@@ -82,8 +97,27 @@ func drop_itens():
 	# For now, just coins
 	if get_probability_drops("Coin"):
 		drop_coins(3)
+	if get_probability_drops("Health"):
+		drop_health(randi_range(1,2))
+	if get_probability_drops("PowerUp"):
+		drop_power_up()
 	drop_done = true
+
+func drop_health(quantity: int):
+	for i in range(quantity):
+		var health_drop = health_scene.instantiate()
+		health_drop.position = position
+		health_drop.position.x += randf_range(0,25)
+		health_drop.position.y += 10
+		get_tree().get_root().get_child(1).get_child(3).add_child(health_drop)
 	
+func drop_power_up():
+	var powerup_drop = load(drops_scenes[randi_range(0,2)]).instantiate()
+	powerup_drop.position = position
+	powerup_drop.position.x += randf_range(0,25)
+	powerup_drop.position.y += 10
+	get_tree().get_root().get_child(1).get_child(3).add_child(powerup_drop)
+
 func drop_coins(quantity: int):
 	for i in range(quantity):
 		var coin = coin_scene.instantiate()
@@ -93,10 +127,20 @@ func drop_coins(quantity: int):
 		coin.coinValue = randi_range(0,75)
 		get_tree().get_root().get_child(1).get_child(3).add_child(coin)
 
+
+# Enemy Levels
+# Slime 1
+# BlackSlime 1.5
+# Skeleton 2
+# FireSkeleton 2.5
+# Demon 3
+# 60% - 5% a cada fase que passou - 3 * levels
 func get_probability_drops(drop: String):
 	var probability = 0
-	if drop == "Coin":
+	if drop == "Coin" or drop == "Health":
 		probability = 0.25
+	else:
+		probability = 0.60 - ((0.05 * game_controller.actual_stage) + (0.03*enemy_probability_levels[enemy_name]))
 	if randf() < probability:
 		return true
 	else:
@@ -127,7 +171,7 @@ func Move():
 		else:
 			$AnimationPlayer.play("Walk")
 	
-	if player_is_on_area and get_global_position().distance_to(_player.get_global_position()) <= 15.0 and _can_attack:
+	if player_is_on_area and get_global_position().distance_to(_player.get_global_position()) <= 20.0 and _can_attack:
 		$AnimationPlayer.play("Attack")
 		cooldown_timer = cooldown_time
 		CurrentState = EnemyStates.ATTACK

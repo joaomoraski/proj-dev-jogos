@@ -8,7 +8,7 @@
 radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pyedf"]
-radius = 26.0192
+radius = 20.0
 
 [node name="Speed" type="RigidBody2D"]
 collision_layer = 524288

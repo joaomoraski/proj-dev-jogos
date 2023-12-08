@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://cqa0k3li33bdt"]
+
+[ext_resource type="Script" path="res://UI/MobileInputs.gd" id="1_cbggh"]
+[ext_resource type="PackedScene" uid="uid://dxfmjk3a1rfvo" path="res://UI/MobileInput/Joystick.tscn" id="2_ogq7q"]
+[ext_resource type="PackedScene" uid="uid://d00gvi7bt2pgc" path="res://UI/MobileInput/ButtonAttack/button_attack.tscn" id="3_q4eo1"]
+[ext_resource type="PackedScene" uid="uid://bvpfvhivjsu2p" path="res://UI/MobileInput/ButtonShield/button_shield.tscn" id="4_jt3hg"]
+[ext_resource type="PackedScene" uid="uid://pv8lppxs5fbm" path="res://UI/MobileInput/ButtonInteract/button_interact.tscn" id="5_qsmby"]
+[ext_resource type="PackedScene" uid="uid://b2bap0ep06arb" path="res://UI/MobileInput/ButtonDodge/button_dodge.tscn" id="6_cvif7"]
+[ext_resource type="PackedScene" uid="uid://cb1gwekpgb0gg" path="res://UI/MobileInput/ButtonJump/button_jump.tscn" id="7_vavqw"]
+
+[node name="MobileInputs" type="Node2D"]
+script = ExtResource("1_cbggh")
+
+[node name="JoystickBase" parent="." instance=ExtResource("2_ogq7q")]
+position = Vector2(1, 448)
+
+[node name="Buttons" type="Node2D" parent="."]
+
+[node name="ButtonAttack" parent="Buttons" instance=ExtResource("3_q4eo1")]
+position = Vector2(954, 586)
+scale = Vector2(1.5, 1.5)
+
+[node name="ButtonShield" parent="Buttons" instance=ExtResource("4_jt3hg")]
+position = Vector2(1010, 586)
+scale = Vector2(1.5, 1.5)
+
+[node name="ButtonInteract" parent="Buttons" instance=ExtResource("5_qsmby")]
+position = Vector2(903, 518)
+scale = Vector2(1.5, 1.5)
+
+[node name="ButtonDodge" parent="Buttons" instance=ExtResource("6_cvif7")]
+position = Vector2(1007, 518)
+scale = Vector2(1.5, 1.5)
+button_action = "dash"
+
+[node name="ButtonJump" parent="Buttons" instance=ExtResource("7_vavqw")]
+position = Vector2(1070, 518)
+scale = Vector2(1.5, 1.5)
