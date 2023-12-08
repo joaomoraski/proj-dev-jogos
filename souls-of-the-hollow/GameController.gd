@@ -9,15 +9,20 @@ var _camera: Camera2D
 ############################################
 var no_reset_life: bool = false
 var player_coins: int = 0
-var player_health = 100
-var player_damage = 25
+var player_health = 1000 # O original é 100
+var player_damage = 250 # original é 25
 var player_max_health = 100
 var actual_stage = 1
 var boss_stages = [3,6,9]
 var maps_positions_list = {
 	0: Vector2(100,100),
 	1: Vector2(29, 48),
-	2: Vector2(25, 144)
+	2: Vector2(25, 144),
+	3: Vector2(17,31),
+	4: Vector2(34,94),
+	5: Vector2(1019,672),
+	6: Vector2(1457,79),
+	7: Vector2(17,31)
 }
 var times_finished = 0
 # Default

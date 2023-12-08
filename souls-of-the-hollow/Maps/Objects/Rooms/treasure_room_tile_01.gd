@@ -45,7 +45,7 @@ func generate_enemies() -> void:
 	var enemy = enemy_scene.instantiate()
 	enemy.position = get_random_spawner_position()
 	enemy.is_from_spawner = true
-	enemy.die_on_spawner.connect(on_enemy_die)	
+	enemy.die_on_spawner.connect(on_enemy_die)
 	add_child(enemy)
 	enemies_on_screen+=1
 	enemies_total-=1	

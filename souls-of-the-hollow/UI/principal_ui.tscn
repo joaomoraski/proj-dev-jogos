@@ -8,6 +8,21 @@
 [ext_resource type="Texture2D" uid="uid://dx2ttomv2wi7e" path="res://Player/PersonagemPrincipalCabeca.png" id="8_y5h0r"]
 [ext_resource type="Script" path="res://UI/CoinText.gd" id="10_caq43"]
 
+[sub_resource type="Animation" id="Animation_hgu3n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Coins/Coins:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
 [sub_resource type="Animation" id="Animation_o0n1q"]
 resource_name = "flip_coin"
 length = 0.9
@@ -25,21 +40,6 @@ tracks/0/keys = {
 "values": [0, 1, 1, 2, 3, 4, 5, 6, 7]
 }
 
-[sub_resource type="Animation" id="Animation_hgu3n"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Coins/Coins:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4dy6u"]
 _data = {
 "RESET": SubResource("Animation_hgu3n"),
@@ -49,6 +49,7 @@ _data = {
 [node name="PrincipalUI" type="CanvasLayer"]
 
 [node name="MobileInputs" parent="." instance=ExtResource("1_w6y5v")]
+visible = false
 
 [node name="LabelVida" type="Label" parent="."]
 modulate = Color(0, 0.803922, 0, 1)
@@ -97,14 +98,6 @@ offset_bottom = 30.0
 [node name="DoubleDamage" type="Sprite2D" parent="Powerups"]
 
 [node name="TripleDamageDoubleTaken" type="Sprite2D" parent="Powerups"]
-
-[node name="QueMerdaEuToFazendo" type="Label" parent="."]
-offset_left = 1.0
-offset_top = 121.0
-offset_right = 368.0
-offset_bottom = 147.0
-text = "Que merda eu to fazendo?
-Atualmente: adicionando os botoes pro mobile"
 
 [node name="Coins" type="Node2D" parent="."]
 

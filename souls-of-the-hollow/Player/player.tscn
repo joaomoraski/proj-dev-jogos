@@ -259,7 +259,7 @@ size = Vector2(14, 27)
 size = Vector2(16, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x0ynk"]
-size = Vector2(16, 27)
+size = Vector2(16, 28)
 
 [sub_resource type="Animation" id="Animation_50ckf"]
 resource_name = "Parry"
@@ -340,6 +340,7 @@ collision_mask = 129
 floor_constant_speed = true
 script = ExtResource("1_qiplr")
 damage_node = ExtResource("2_uhget")
+SPEED = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_qslmg")
@@ -362,6 +363,8 @@ shape = SubResource("RectangleShape2D_kiqqe")
 light_mask = 8
 visibility_layer = 17
 position = Vector2(18, 2)
+collision_layer = 2147483649
+collision_mask = 2147483649
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackCollision"]
 shape = SubResource("RectangleShape2D_iuhsv")
@@ -369,7 +372,7 @@ shape = SubResource("RectangleShape2D_iuhsv")
 [node name="PlayerHitBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHitBox"]
-position = Vector2(0, 2.5)
+position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_x0ynk")
 disabled = true
 debug_color = Color(1, 0, 0.52549, 0.419608)
@@ -388,3 +391,4 @@ libraries = {
 }
 
 [connection signal="area_entered" from="PlayerHitBox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_shape_entered" from="PlayerHitBox" to="." method="_on_player_hit_box_body_shape_entered"]

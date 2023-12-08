@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://y0apbebnl2yq" path="res://Player/player.tscn" id="1_lsfwl"]
 [ext_resource type="Script" path="res://game_init.gd" id="1_o6rfp"]
 [ext_resource type="PackedScene" uid="uid://fysa5u35ksds" path="res://UI/principal_ui.tscn" id="3_k2dxx"]
-[ext_resource type="PackedScene" uid="uid://cl115l5fj4jn5" path="res://Maps/debug_map.tscn" id="6_5pclu"]
+[ext_resource type="PackedScene" uid="uid://cqvyouxaljbow" path="res://Maps/01/map_01.tscn" id="6_akpw8"]
 [ext_resource type="Script" path="res://Player/Camera2D.gd" id="10_hdpr3"]
 [ext_resource type="AudioStream" uid="uid://cur4s8vbas1de" path="res://Sounds/Moonlight Sonata 1st Movement.mp3" id="16_ruasb"]
 
@@ -14,15 +14,15 @@ script = ExtResource("1_o6rfp")
 
 [node name="Player" parent="." groups=["damageIndicator"] instance=ExtResource("1_lsfwl")]
 z_index = 10
-position = Vector2(371, 14)
+position = Vector2(29, 48)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 z_index = 20
-position = Vector2(0, 3)
 zoom = Vector2(3, 3)
+position_smoothing_speed = 20.0
 script = ExtResource("10_hdpr3")
 
 [node name="Audio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_ruasb")
 
-[node name="DebugMap" parent="." instance=ExtResource("6_5pclu")]
+[node name="Map01" parent="." instance=ExtResource("6_akpw8")]

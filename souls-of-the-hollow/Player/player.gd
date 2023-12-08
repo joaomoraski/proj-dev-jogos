@@ -19,12 +19,11 @@ var have_demon_sword: bool = false
 var in_defense: bool = false
 var recent_defense: bool = false
 var parry: bool = false
+var is_burning: bool = false
 var flipped: bool = false
 
 const dashspeed = 300.0
 const dashlength = 0.4
-var damage = 25
-var health = 100
 
 @onready var dash = $Dash
 
@@ -48,12 +47,26 @@ func setup():
 		game_controller.player_damage += (game_controller.player_damage * multiplier)
 		game_controller.player_max_health += (game_controller.player_max_health * multiplier)
 	
+func recalculate_damage():
+	var times_finished = game_controller.times_finished
+	
+	if have_demon_sword:
+		if times_finished:
+			var multiplier = 0.02 * times_finished
+			game_controller.player_damage += (game_controller.base_demon_sword_damage * multiplier)
+		else:
+			game_controller.player_damage += game_controller.base_demon_sword_damage
+	else:
+		if times_finished:
+			var multiplier = 0.02 * times_finished
+			game_controller.player_damage += (game_controller.player_damage * multiplier)
+
 
 func set_player_health_bar(player_health_bar: ProgressBar):
 	_player_health_bar = player_health_bar
 
 func popup(message: String):
-	var instantiate_damage = damage_node.instantiate()
+	var instantiate_damagedamage = damage_node.instantiate()
 	instantiate_damage.get_child(0).text = message
 	instantiate_damage.position = global_position
 	var tween = get_tree().create_tween()
@@ -205,19 +218,30 @@ func _on_hitbox_area_entered(area: Area2D):
 		popup(str(enemyDamage))
 		if area.get_groups()[0] == "fireSkeletonAttack" or area.get_groups()[0] == "demonAttack":
 			popup("INCENDIADO!!")
+			is_burning = true
 			burn_player()
 
 func burn_player():
 	var i = 0
-	while i <= 10:
+	while i <= 10 and is_burning:
 		game_controller.player_health -= 2
 		game_controller.get_camera().shake_camera(3, 0.3)
 		popup(str(2))
 		await get_tree().create_timer(2).timeout
 		i+=2
+		if i == 10:
+			is_burning = false
+	is_burning = false
 
 func _parry():
 	parry = !parry
 	if recent_defense:
 		recent_defense = false
 		
+
+func _on_player_hit_box_body_shape_entered(_body_rid, body, _body_shape_index, _local_shape_index):
+	if body.name == "MagmaTileMap":
+		game_controller.player_health -= 5
+		game_controller.get_camera().shake_camera(3, 0.3)
+		popup("INCENDIADO!!")
+		burn_player()
