@@ -186,12 +186,17 @@ func Move():
 	CheckAndExecuteAttack()
 
 func Die():
-	$AnimationPlayer.play("Die")
+	if not $AnimationTela.is_playing():
+		$AnimationPlayer.play("Die")
 
 func restart_game():
 	game_controller.actual_stage=1
 	game_controller.change_stage(load("res://Maps/01/map_01.tscn"))
 	game_controller.reset_player()
+	$TelaMorteSprite.visible = false
+	
+func play_die_animation():
+	$AnimationTela.play("Morte")
 
 func onStateFinish():
 	CurrentState = PlayerStates.MOVE

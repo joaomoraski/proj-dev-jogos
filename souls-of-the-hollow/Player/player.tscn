@@ -1,10 +1,11 @@
-[gd_scene load_steps=23 format=3 uid="uid://y0apbebnl2yq"]
+[gd_scene load_steps=25 format=3 uid="uid://y0apbebnl2yq"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_qiplr"]
 [ext_resource type="Texture2D" uid="uid://4xd8tl5lte7r" path="res://Player/PersonagemPrincipal.png" id="1_qslmg"]
 [ext_resource type="PackedScene" uid="uid://bwdkf3dk1c25m" path="res://UI/floating_numbers.tscn" id="2_uhget"]
 [ext_resource type="PackedScene" uid="uid://d20tc3g8jgae8" path="res://Player/dash.tscn" id="3_kd2kb"]
 [ext_resource type="Texture2D" uid="uid://dv66rvvgdilo4" path="res://Maps/Tela.png" id="5_8k1cw"]
+[ext_resource type="Texture2D" uid="uid://exenha5f6gx8" path="res://Maps/TelaMorte.png" id="6_2bsp0"]
 [ext_resource type="AudioStream" uid="uid://0gghjp6slryr" path="res://Sounds/PrincipalAttack/swing3.wav" id="6_xsjvj"]
 
 [sub_resource type="Animation" id="Animation_l22lq"]
@@ -124,7 +125,7 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
-"method": &"restart_game"
+"method": &"play_die_animation"
 }]
 }
 tracks/2/type = "value"
@@ -331,9 +332,63 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Player/TelaMorteSprite:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.12549)]
+}
+
+[sub_resource type="Animation" id="Animation_1mlmc"]
+resource_name = "Morte"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player/TelaMorteSprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player/TelaMorteSprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.0705882), Color(1, 1, 1, 0.12549), Color(1, 1, 1, 0.25098), Color(1, 1, 1, 0.501961), Color(1, 1, 1, 0.792157), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Player")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"restart_game"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_squ85"]
 _data = {
+"Morte": SubResource("Animation_1mlmc"),
 "Parry": SubResource("Animation_50ckf"),
 "RESET": SubResource("Animation_peif7")
 }
@@ -386,6 +441,10 @@ debug_color = Color(1, 0, 0.52549, 0.419608)
 visible = false
 modulate = Color(1, 1, 1, 0)
 texture = ExtResource("5_8k1cw")
+
+[node name="TelaMorteSprite" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("6_2bsp0")
 
 [node name="AnimationTela" type="AnimationPlayer" parent="."]
 root_node = NodePath("../..")

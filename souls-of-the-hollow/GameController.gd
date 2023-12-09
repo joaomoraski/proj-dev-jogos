@@ -9,8 +9,8 @@ var _camera: Camera2D
 ############################################
 var no_reset_life: bool = false
 var player_coins: int = 0
-var player_health = 1000 # O original é 100
-var player_damage = 250 # original é 25
+var player_health = 100 # O original é 100
+var player_damage = 25 # original é 25
 var player_max_health = 100
 var actual_stage = 1
 var boss_stages = [3,6,9]
