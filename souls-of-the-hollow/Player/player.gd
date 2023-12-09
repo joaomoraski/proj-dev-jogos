@@ -37,6 +37,7 @@ func _ready():
 	
 func setup():
 	have_demon_sword = false
+	is_burning = false
 	$PlayerHitBox/CollisionShape2D.disabled = false
 	scale.x = 1
 	_direction = 0.1
@@ -66,7 +67,7 @@ func set_player_health_bar(player_health_bar: ProgressBar):
 	_player_health_bar = player_health_bar
 
 func popup(message: String):
-	var instantiate_damagedamage = damage_node.instantiate()
+	var instantiate_damage = damage_node.instantiate()
 	instantiate_damage.get_child(0).text = message
 	instantiate_damage.position = global_position
 	var tween = get_tree().create_tween()
@@ -238,10 +239,13 @@ func _parry():
 	if recent_defense:
 		recent_defense = false
 		
-
 func _on_player_hit_box_body_shape_entered(_body_rid, body, _body_shape_index, _local_shape_index):
 	if body.name == "MagmaTileMap":
 		game_controller.player_health -= 5
 		game_controller.get_camera().shake_camera(3, 0.3)
 		popup("INCENDIADO!!")
+		is_burning = true
 		burn_player()
+		
+func play_attack_audio():
+	$AttackAudio.play()

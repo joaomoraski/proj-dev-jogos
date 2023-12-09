@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://wyunibydj0n0"]
+[gd_scene load_steps=15 format=3 uid="uid://wyunibydj0n0"]
 
-[ext_resource type="Script" path="res://FireSkeleton.gd" id="1_3ykhc"]
+[ext_resource type="Script" path="res://Enemies/FireSkeleton/FireSkeleton.gd" id="1_i1cwa"]
 [ext_resource type="Texture2D" uid="uid://br63vhlp7s3oi" path="res://Enemies/FireSkeleton/FireSkeleton.png" id="2_7r068"]
 [ext_resource type="PackedScene" uid="uid://bwdkf3dk1c25m" path="res://UI/floating_numbers.tscn" id="2_sy4m1"]
+[ext_resource type="AudioStream" uid="uid://bphxg0uhxi0lc" path="res://Sounds/SkeletonAttack/sword-unsheathe3.wav" id="4_ce12i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qg412"]
 size = Vector2(10, 30)
@@ -77,9 +78,18 @@ tracks/5/path = NodePath(".")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(1.5),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.3, 0.6, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "values": [{
+"args": [],
+"method": &"play_attack_audio"
+}, {
+"args": [],
+"method": &"play_attack_audio"
+}, {
+"args": [],
+"method": &"play_attack_audio"
+}, {
 "args": [],
 "method": &"on_attack_animation_finished"
 }]
@@ -274,7 +284,7 @@ radius = 30.0167
 size = Vector2(12.5, 15)
 
 [node name="FireSkeleton" type="CharacterBody2D" groups=["enemies"]]
-script = ExtResource("1_3ykhc")
+script = ExtResource("1_i1cwa")
 damage_node = ExtResource("2_sy4m1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -315,6 +325,9 @@ shape = SubResource("RectangleShape2D_solt7")
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(11, -8)
 target_position = Vector2(0, 29)
+
+[node name="AttackAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ce12i")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="VisionBox" to="." method="_on_vision_box_body_entered"]

@@ -16,13 +16,13 @@ var actual_stage = 1
 var boss_stages = [3,6,9]
 var maps_positions_list = {
 	0: Vector2(100,100),
-	1: Vector2(29, 48),
-	2: Vector2(25, 144),
+	1: Vector2(29,48),
+	2: Vector2(25,144),
 	3: Vector2(17,31),
 	4: Vector2(34,94),
 	5: Vector2(1019,672),
 	6: Vector2(1457,79),
-	7: Vector2(17,31)
+	7: Vector2(29,48)
 }
 var times_finished = 0
 # Default
@@ -55,8 +55,8 @@ func get_player() -> Player:
 	return _player
 
 func reset_player():
-	player_health = 100
-	player_damage = 25
+	player_health = 1000
+	player_damage = 250
 	player_max_health = 100
 	_player.setup()
 
@@ -78,6 +78,7 @@ func apply_player_effect(type: String):
 			player_damage += (base_demon_sword_damage * multiplier)
 		else:
 			player_damage += base_demon_sword_damage
+
 	if type == "Health":
 		if player_health < player_max_health:
 			if player_health + 15 > player_max_health:
@@ -88,25 +89,20 @@ func apply_player_effect(type: String):
 func remove_player_effect(type: String):
 	if type == "Speed":
 		_player.normalSpeed = 150.0
-	if type == "DoubleDamage":
-		player_damage = 25
-		# Todo, verificar se esta com a espada
-		if _player.have_demon_sword and not times_finished:
-			player_damage+=base_demon_sword_damage
-			
-		if times_finished:
-			var multiplier = 0.02 * times_finished
-			player_damage += (player_damage * multiplier)
-			if _player.have_demon_sword:
-				player_damage += (base_demon_sword_damage * multiplier)
-				
-	if type == "TripleDamageDoubleTaken":
-		player_damage = 25
+	if type == "DoubleDamage" or type == "TripleDamageDoubleTaken":
 		_player.double_damage_taken = false
-		# Todo, verificar se esta com a espada
-		if times_finished:
-			var multiplier = 0.02 * times_finished
-			player_damage += (player_damage * multiplier)
+		player_damage = 25
+		remove_effect_damage_logic()
+	
+func remove_effect_damage_logic():
+	if _player.have_demon_sword and not times_finished:
+		player_damage+=base_demon_sword_damage
+		
+	if times_finished:
+		var multiplier = 0.02 * times_finished
+		player_damage += (player_damage * multiplier)
+		if _player.have_demon_sword:
+			player_damage += (base_demon_sword_damage * multiplier)
 	
 func setup_enemy_damage(enemy, damage):
 	enemies_damage[enemy] = damage

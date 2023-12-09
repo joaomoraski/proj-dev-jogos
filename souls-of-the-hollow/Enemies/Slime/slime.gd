@@ -30,3 +30,8 @@ func setup():
 		$Sprite2D.modulate = Color(1, 0, 0, 1)
 		game_controller.setup_enemy_damage("BlackSlime", damage)
 		enemy_name = "BlackSlime"
+
+
+func dead_sound():
+	$DeadAudio.play()
+	

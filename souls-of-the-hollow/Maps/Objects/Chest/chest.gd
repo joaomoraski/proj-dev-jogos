@@ -30,6 +30,7 @@ func drop_demon_sword():
 	var demon_sword = demon_sword_scene.instantiate()
 	demon_sword.position = get_global_position()
 	demon_sword.position.x += randf_range(0,100)
+	demon_sword.position.y -= randf_range(1,20)
 	get_tree().get_root().get_child(1).get_child(3).add_child(demon_sword)
 
 func drop_health(quantity: int):
@@ -37,6 +38,7 @@ func drop_health(quantity: int):
 		var health_drop = health_scene.instantiate()
 		health_drop.position = get_global_position()
 		health_drop.position.x += randf_range(0,100)
+		health_drop.position.y -= randf_range(1,20)
 		get_tree().get_root().get_child(1).get_child(3).add_child(health_drop)
 
 
@@ -45,5 +47,6 @@ func drop_coins(quantity: int):
 		var coin = coin_scene.instantiate()
 		coin.position = get_global_position()
 		coin.position.x += randf_range(0,100)
+		coin.position.y -= randf_range(1,20)
 		coin.coinValue = randi_range(50,125)
 		get_tree().get_root().get_child(1).get_child(3).add_child(coin)

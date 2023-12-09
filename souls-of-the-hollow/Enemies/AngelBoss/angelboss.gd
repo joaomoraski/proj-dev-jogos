@@ -3,10 +3,6 @@ extends CharacterBody2D
 
 @export var damage_node: PackedScene
 var coin_scene = preload("res://Maps/Objects/Coin/coin.tscn")
-# Finite state machine
-enum EnemyStates {MOVE, ATTACK, DEAD, HURT} # Array padrao, 0, 1, 2, 3 , HURT, DEAD 
-var CurrentState = EnemyStates.MOVE # Estado atual do inimigo
-
 var BASE_HEALTH = 500
 var health = 500
 var drop_done: bool = false
@@ -14,21 +10,28 @@ var drop_done: bool = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var _player: Player
-#var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var bossMap: BossMap
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var enemy_attack_name
 var enemy_name
 var rotation_index: int = 0
 var start_boss: bool = false
+var apply_gravity: bool = false
+var back_position: bool = false
+var dead: bool = false
 
 func _ready():
 #	$AnimationPlayer.play("Idle")
 	randomize()
-	setup()
 
 func set_player(player: Player):
 	_player = player
+	
+func set_map(map: BossMap):
+	bossMap = map
 
-func setup():
+func setup(map: BossMap):
+	set_map(map)
 	set_player(game_controller._player)
 	var times = game_controller.times_finished
 	var multiplier = 0.05 * times
@@ -49,27 +52,32 @@ func shield_rotation():
 		rotation_index+=1
 
 func _physics_process(delta):
-	shield_rotation()
-#	print($Escudo.rotation_degrees)
-			
-	# 3 segundos para bater no boss
-	# Teleportar o player para o o lado do boss
-#	$AnimationPlayer.play("Stunned")
-#	await $AnimationPlayer.animation_finished
-	pass
-	# Adiciona a gravidade ao jogo
-#	 velocity.y += gravity * delta
+	if not dead:
+		shield_rotation()
+		if apply_gravity:
+			$AnimationPlayer.play("Stunned")
+			velocity.y += gravity * delta
+		if back_position:
+			velocity.y -= gravity * delta
+		if position.y <= 70 and back_position:
+			back_position = false
+			velocity = Vector2(0,0)
+		verify_death()
+	move_and_slide()
 	
 func _on_stunned_animation_finished():
-	print("acabo")
-#	$AnimationPlayer.play("Idle")
-
+	$Escudo.visible = true
+	apply_gravity = false
+	back_position = true
+	$AnimationPlayer.play("Idle")
 
 func verify_death():
 	if health <= 0:
-		CurrentState = EnemyStates.DEAD
+		dead = true
 		$AnimationPlayer.play("Stunned")
 		$Hitbox/CollisionShape2D.disabled = true
+		$Hitbox.set_deferred("monitoring", false)
+		bossMap.open_exit_door()
 		await $AnimationPlayer.animation_finished
 		drop_itens()
 		queue_free()
@@ -84,7 +92,7 @@ func drop_coins(quantity: int):
 		var coin = coin_scene.instantiate()
 		coin.position = position
 		coin.position.x += randf_range(0,100)
-		coin.position.y += randf_range(10,75)
+		coin.position.y -= randf_range(25,100)
 		coin.coinValue = randi_range(0,75)
 		get_tree().get_root().get_child(1).get_child(3).add_child(coin)
 
@@ -99,22 +107,8 @@ func popup(message: String):
 func _get_direction():
 	return Vector2(randf_range(-1, 1), -randf()) * 16
 	
-func Move():
-	pass
-#	if is_on_floor() and $AnimationPlayer.current_animation != "Attack":
-#		if velocity.x == 0.0:
-#			$AnimationPlayer.play("Idle")
-#		else:
-#			$AnimationPlayer.play("Walk")
-
-
 func _on_hitbox_area_entered(area):
-	if area.name == "AttackCollision" and CurrentState != EnemyStates.DEAD and CurrentState != EnemyStates.HURT:
-		CurrentState = EnemyStates.HURT
+	if area.name == "AttackCollision":
 		health -= game_controller.player_damage
 		game_controller.get_camera().shake_camera(3, 0.3)
 		popup(str(game_controller.player_damage))
-		
-func on_attack_animation_finished():
-	CurrentState = EnemyStates.MOVE
-	$AnimationPlayer.play("Idle")

@@ -108,12 +108,14 @@ func drop_health(quantity: int):
 		var health_drop = health_scene.instantiate()
 		health_drop.position = get_global_position()
 		health_drop.position.x += randf_range(0,100)
+		health_drop.position.y -= randf_range(1,20)
 		get_tree().get_root().get_child(1).get_child(3).add_child(health_drop)
 	
 func drop_power_up():
 	var powerup_drop = load(drops_scenes[randi_range(0,2)]).instantiate()
 	powerup_drop.position = get_global_position()
 	powerup_drop.position.x += randf_range(0,100)
+	powerup_drop.position.y -= randf_range(1,20)
 	get_tree().get_root().get_child(1).get_child(3).add_child(powerup_drop)
 
 func drop_coins(quantity: int):
@@ -121,6 +123,7 @@ func drop_coins(quantity: int):
 		var coin = coin_scene.instantiate()
 		coin.position = get_global_position()
 		coin.position.x += randf_range(0,100)
+		coin.position.y -= randf_range(1,20)
 		coin.coinValue = randi_range(0,75)
 		get_tree().get_root().get_child(1).get_child(3).add_child(coin)
 

@@ -20,6 +20,6 @@ func _on_hitbox_area_entered(area):
 	
 	if health <= 0:
 		$anim.play("Destroyed")
-		$CollisionShape2D.disabled = true
+		$CollisionShape2D.set_deferred("disabled", true)
 		await $anim.animation_finished
 		queue_free()

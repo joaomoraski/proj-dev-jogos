@@ -12,3 +12,6 @@ func _ready():
 	$AnimationPlayer.play("Idle")
 	randomize()
 	setup()
+
+func play_attack_audio():
+	$AttackAudio.play()

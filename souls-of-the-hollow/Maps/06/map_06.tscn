@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ggqk2lla4g45"]
+[gd_scene load_steps=15 format=3 uid="uid://ggqk2lla4g45"]
 
 [ext_resource type="PackedScene" uid="uid://bkvcc2xwljlla" path="res://Maps/Objects/Rooms/treasure_room_tile_01.tscn" id="1_d37k4"]
 [ext_resource type="Texture2D" uid="uid://ba3oowpbfc84f" path="res://Maps/Background/FirstMap/bg1.png" id="1_ptywf"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://dfsvncdotj1qm" path="res://Maps/Objects/Chest/chest.tscn" id="4_7em2q"]
 [ext_resource type="PackedScene" uid="uid://bdutc403hjyxc" path="res://Maps/Objects/Crates/crates.tscn" id="5_pmrw4"]
 [ext_resource type="PackedScene" uid="uid://wyunibydj0n0" path="res://Enemies/FireSkeleton/fire_skeleton.tscn" id="6_2ol8b"]
-[ext_resource type="PackedScene" uid="uid://y0apbebnl2yq" path="res://Player/player.tscn" id="10_15oyu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j1mc0"]
 texture = ExtResource("2_wy7pc")
@@ -1032,6 +1031,3 @@ enemy_scene = ExtResource("3_oqt4e")
 
 [node name="ExitDoor" parent="." instance=ExtResource("2_7ckob")]
 position = Vector2(22, 908)
-
-[node name="Player" parent="." instance=ExtResource("10_15oyu")]
-position = Vector2(1457, 79)

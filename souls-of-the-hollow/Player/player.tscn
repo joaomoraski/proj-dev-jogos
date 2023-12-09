@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://y0apbebnl2yq"]
+[gd_scene load_steps=23 format=3 uid="uid://y0apbebnl2yq"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_qiplr"]
 [ext_resource type="Texture2D" uid="uid://4xd8tl5lte7r" path="res://Player/PersonagemPrincipal.png" id="1_qslmg"]
 [ext_resource type="PackedScene" uid="uid://bwdkf3dk1c25m" path="res://UI/floating_numbers.tscn" id="2_uhget"]
 [ext_resource type="PackedScene" uid="uid://d20tc3g8jgae8" path="res://Player/dash.tscn" id="3_kd2kb"]
 [ext_resource type="Texture2D" uid="uid://dv66rvvgdilo4" path="res://Maps/Tela.png" id="5_8k1cw"]
+[ext_resource type="AudioStream" uid="uid://0gghjp6slryr" path="res://Sounds/PrincipalAttack/swing3.wav" id="6_xsjvj"]
 
 [sub_resource type="Animation" id="Animation_l22lq"]
 resource_name = "Attack"
@@ -28,9 +29,12 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
+"args": [],
+"method": &"play_attack_audio"
+}, {
 "args": [],
 "method": &"_on_finished_attack_animation"
 }]
@@ -340,7 +344,6 @@ collision_mask = 129
 floor_constant_speed = true
 script = ExtResource("1_qiplr")
 damage_node = ExtResource("2_uhget")
-SPEED = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_qslmg")
@@ -389,6 +392,9 @@ root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_squ85")
 }
+
+[node name="AttackAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_xsjvj")
 
 [connection signal="area_entered" from="PlayerHitBox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_shape_entered" from="PlayerHitBox" to="." method="_on_player_hit_box_body_shape_entered"]
