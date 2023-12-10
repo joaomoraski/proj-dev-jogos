@@ -29,6 +29,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	if number_mobs <= 0 and enemies_on_screen <= 0:
+		all_enemies_die = true
 	if all_enemies_die or (killed_enemies >= number_mobs_save/4):
 		killed_enemies = 0
 		enemies_on_screen = 0

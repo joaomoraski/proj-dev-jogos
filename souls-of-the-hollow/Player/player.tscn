@@ -266,6 +266,47 @@ size = Vector2(16, 30)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x0ynk"]
 size = Vector2(16, 28)
 
+[sub_resource type="Animation" id="Animation_1mlmc"]
+resource_name = "Morte"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player/TelaMorteSprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Player/TelaMorteSprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.0705882), Color(1, 1, 1, 0.12549), Color(1, 1, 1, 0.25098), Color(1, 1, 1, 0.501961), Color(1, 1, 1, 0.792157), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Player")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"restart_game"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_50ckf"]
 resource_name = "Parry"
 length = 0.3
@@ -345,47 +386,6 @@ tracks/2/keys = {
 "values": [Color(1, 1, 1, 0.12549)]
 }
 
-[sub_resource type="Animation" id="Animation_1mlmc"]
-resource_name = "Morte"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player/TelaMorteSprite:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Player/TelaMorteSprite:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0.0705882), Color(1, 1, 1, 0.12549), Color(1, 1, 1, 0.25098), Color(1, 1, 1, 0.501961), Color(1, 1, 1, 0.792157), Color(1, 1, 1, 1)]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Player")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"restart_game"
-}]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_squ85"]
 _data = {
 "Morte": SubResource("Animation_1mlmc"),
@@ -444,6 +444,7 @@ texture = ExtResource("5_8k1cw")
 
 [node name="TelaMorteSprite" type="Sprite2D" parent="."]
 visible = false
+modulate = Color(1, 1, 1, 0.12549)
 texture = ExtResource("6_2bsp0")
 
 [node name="AnimationTela" type="AnimationPlayer" parent="."]
