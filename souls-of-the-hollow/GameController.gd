@@ -55,8 +55,8 @@ func get_player() -> Player:
 	return _player
 
 func reset_player():
-	player_health = 1000
-	player_damage = 250
+	player_health = 100
+	player_damage = 25
 	player_max_health = 100
 	_player.setup()
 
